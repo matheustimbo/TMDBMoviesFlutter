@@ -27,7 +27,7 @@ class GenreOption extends StatelessWidget {
         },
         child: Container(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             child: Text(genre.name!),
           ),
           decoration: BoxDecoration(

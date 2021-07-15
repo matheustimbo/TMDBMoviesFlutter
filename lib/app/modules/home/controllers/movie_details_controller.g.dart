@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'movie_details_store.dart';
+part of 'movie_details_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,37 +8,37 @@ part of 'movie_details_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$MovieDetailsStore on MovieDetailsStoreBase, Store {
+mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
   Computed<double>? _$backdropHeightComputed;
 
   @override
   double get backdropHeight =>
       (_$backdropHeightComputed ??= Computed<double>(() => super.backdropHeight,
-              name: 'MovieDetailsStoreBase.backdropHeight'))
+              name: '_MovieDetailsControllerBase.backdropHeight'))
           .value;
   Computed<double>? _$backdropBlugSigmaComputed;
 
   @override
   double get backdropBlugSigma => (_$backdropBlugSigmaComputed ??=
           Computed<double>(() => super.backdropBlugSigma,
-              name: 'MovieDetailsStoreBase.backdropBlugSigma'))
+              name: '_MovieDetailsControllerBase.backdropBlugSigma'))
       .value;
   Computed<double>? _$appBarOpacityComputed;
 
   @override
   double get appBarOpacity =>
       (_$appBarOpacityComputed ??= Computed<double>(() => super.appBarOpacity,
-              name: 'MovieDetailsStoreBase.appBarOpacity'))
+              name: '_MovieDetailsControllerBase.appBarOpacity'))
           .value;
   Computed<double>? _$appBarElevationComputed;
 
   @override
   double get appBarElevation => (_$appBarElevationComputed ??= Computed<double>(
           () => super.appBarElevation,
-          name: 'MovieDetailsStoreBase.appBarElevation'))
+          name: '_MovieDetailsControllerBase.appBarElevation'))
       .value;
 
-  final _$loadingAtom = Atom(name: 'MovieDetailsStoreBase.loading');
+  final _$loadingAtom = Atom(name: '_MovieDetailsControllerBase.loading');
 
   @override
   bool get loading {
@@ -53,7 +53,7 @@ mixin _$MovieDetailsStore on MovieDetailsStoreBase, Store {
     });
   }
 
-  final _$movieAtom = Atom(name: 'MovieDetailsStoreBase.movie');
+  final _$movieAtom = Atom(name: '_MovieDetailsControllerBase.movie');
 
   @override
   MovieDetails? get movie {
@@ -69,7 +69,7 @@ mixin _$MovieDetailsStore on MovieDetailsStoreBase, Store {
   }
 
   final _$scrolledPixelsAtom =
-      Atom(name: 'MovieDetailsStoreBase.scrolledPixels');
+      Atom(name: '_MovieDetailsControllerBase.scrolledPixels');
 
   @override
   double get scrolledPixels {
@@ -84,7 +84,8 @@ mixin _$MovieDetailsStore on MovieDetailsStoreBase, Store {
     });
   }
 
-  final _$similarMoviesAtom = Atom(name: 'MovieDetailsStoreBase.similarMovies');
+  final _$similarMoviesAtom =
+      Atom(name: '_MovieDetailsControllerBase.similarMovies');
 
   @override
   List<Movie> get similarMovies {
@@ -100,7 +101,7 @@ mixin _$MovieDetailsStore on MovieDetailsStoreBase, Store {
   }
 
   final _$loadingSimilarMoviesAtom =
-      Atom(name: 'MovieDetailsStoreBase.loadingSimilarMovies');
+      Atom(name: '_MovieDetailsControllerBase.loadingSimilarMovies');
 
   @override
   bool get loadingSimilarMovies {
@@ -117,7 +118,7 @@ mixin _$MovieDetailsStore on MovieDetailsStoreBase, Store {
   }
 
   final _$loadingMoreSimilarMoviesAtom =
-      Atom(name: 'MovieDetailsStoreBase.loadingMoreSimilarMovies');
+      Atom(name: '_MovieDetailsControllerBase.loadingMoreSimilarMovies');
 
   @override
   bool get loadingMoreSimilarMovies {
@@ -134,7 +135,7 @@ mixin _$MovieDetailsStore on MovieDetailsStoreBase, Store {
   }
 
   final _$similarMoviesPageAtom =
-      Atom(name: 'MovieDetailsStoreBase.similarMoviesPage');
+      Atom(name: '_MovieDetailsControllerBase.similarMoviesPage');
 
   @override
   int get similarMoviesPage {
@@ -147,6 +148,46 @@ mixin _$MovieDetailsStore on MovieDetailsStoreBase, Store {
     _$similarMoviesPageAtom.reportWrite(value, super.similarMoviesPage, () {
       super.similarMoviesPage = value;
     });
+  }
+
+  final _$firstFetchAsyncAction =
+      AsyncAction('_MovieDetailsControllerBase.firstFetch');
+
+  @override
+  Future<void> firstFetch(int id) {
+    return _$firstFetchAsyncAction.run(() => super.firstFetch(id));
+  }
+
+  final _$fetchMovieDetailsAsyncAction =
+      AsyncAction('_MovieDetailsControllerBase.fetchMovieDetails');
+
+  @override
+  Future<void> fetchMovieDetails(int id) {
+    return _$fetchMovieDetailsAsyncAction
+        .run(() => super.fetchMovieDetails(id));
+  }
+
+  final _$fetchSimilarMoviesAsyncAction =
+      AsyncAction('_MovieDetailsControllerBase.fetchSimilarMovies');
+
+  @override
+  Future<void> fetchSimilarMovies(int id) {
+    return _$fetchSimilarMoviesAsyncAction
+        .run(() => super.fetchSimilarMovies(id));
+  }
+
+  final _$_MovieDetailsControllerBaseActionController =
+      ActionController(name: '_MovieDetailsControllerBase');
+
+  @override
+  dynamic scrollListener(ScrollNotification scrollNotification) {
+    final _$actionInfo = _$_MovieDetailsControllerBaseActionController
+        .startAction(name: '_MovieDetailsControllerBase.scrollListener');
+    try {
+      return super.scrollListener(scrollNotification);
+    } finally {
+      _$_MovieDetailsControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

@@ -53,20 +53,32 @@ class _HomePageState extends ModularState<HomePage, MoviesStore> {
               }),
               Observer(
                   builder: (_) => MoviesListSection(
-                      movies: _homeController.filteredPopularMovies,
-                      sectionTitle: 'Popular')),
+                        movies: _homeController.filteredPopularMovies,
+                        sectionTitle: 'Popular',
+                        onEndReached: _homeController.fetchPopularMovies,
+                        loading: _moviesStore.loadingMorePopularMovies,
+                      )),
               Observer(
                   builder: (_) => MoviesListSection(
-                      movies: _homeController.filteredNowPlayingMovies,
-                      sectionTitle: 'Em cartaz')),
+                        movies: _homeController.filteredNowPlayingMovies,
+                        sectionTitle: 'Em cartaz',
+                        onEndReached: _homeController.fetchNowPlayingMovies,
+                        loading: _moviesStore.loadingMoreNowPlayingMovies,
+                      )),
               Observer(
                   builder: (_) => MoviesListSection(
-                      movies: _homeController.filteredUpcomingMovies,
-                      sectionTitle: 'Vindo aí')),
+                        movies: _homeController.filteredUpcomingMovies,
+                        sectionTitle: 'Vindo aí',
+                        onEndReached: _homeController.fetchUpcomingMovies,
+                        loading: _moviesStore.loadingMoreUpcomingMovies,
+                      )),
               Observer(
                   builder: (_) => MoviesListSection(
-                      movies: _homeController.filteredTopRatedMovies,
-                      sectionTitle: 'Melhor avaliados')),
+                        movies: _homeController.filteredTopRatedMovies,
+                        sectionTitle: 'Melhor avaliados',
+                        onEndReached: _homeController.fetchTopRatedMovies,
+                        loading: _moviesStore.loadingMoreTopRatedMovies,
+                      )),
             ],
           ),
         ));

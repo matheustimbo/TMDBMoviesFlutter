@@ -5,29 +5,27 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart';
 import 'package:tmdbmovies/app/modules/home/controllers/movie_details_controller.dart';
-import 'package:tmdbmovies/app/modules/home/stores/movie_details_store.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   static const routeName = '/movie';
 
   final String id;
 
-  const MovieDetailsPage({Key? key, required this.id}) : super(key: key);
+  MovieDetailsPage({Key? key, required this.id}) : super(key: key);
+
+  final MovieDetailsController _movieDetailsController =
+      new MovieDetailsController();
 
   @override
   _MovieDetailsState createState() => _MovieDetailsState();
 }
 
 class _MovieDetailsState
-    extends ModularState<MovieDetailsPage, MovieDetailsStore> {
-  final MovieDetailsStore _movieDetailsStore = Modular.get<MovieDetailsStore>();
-  final MovieDetailsController _movieDetailsController =
-      new MovieDetailsController();
-
+    extends ModularState<MovieDetailsPage, MovieDetailsController> {
   @override
   void initState() {
     super.initState();
-    _movieDetailsController.firstFetch(int.parse(widget.id));
+    widget._movieDetailsController.firstFetch(int.parse(widget.id));
   }
 
   @override
@@ -36,18 +34,18 @@ class _MovieDetailsState
       return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            elevation: _movieDetailsStore.appBarElevation,
-            backgroundColor:
-                Colors.black.withOpacity(_movieDetailsStore.appBarOpacity),
+            elevation: widget._movieDetailsController.appBarElevation,
+            backgroundColor: Colors.black
+                .withOpacity(widget._movieDetailsController.appBarOpacity),
             title: Observer(builder: (_) {
-              return Text(_movieDetailsStore.loading
+              return Text(widget._movieDetailsController.loading
                   ? 'Carregando'
-                  : _movieDetailsStore.movie?.title ?? "");
+                  : widget._movieDetailsController.movie?.title ?? "");
             }),
           ),
           body: Observer(
             builder: (_) {
-              return _movieDetailsStore.loading
+              return widget._movieDetailsController.loading 
                   ? Center(
                       child: CircularProgressIndicator(
                         color: Colors.white,
@@ -55,7 +53,8 @@ class _MovieDetailsState
                     )
                   : NotificationListener<ScrollNotification>(
                       onNotification: (notification) {
-                        _movieDetailsController.scrollListener(notification);
+                        widget._movieDetailsController
+                            .scrollListener(notification);
                         return true;
                       },
                       child: Stack(
@@ -63,10 +62,11 @@ class _MovieDetailsState
                           Stack(
                             children: [
                               SizedBox(
-                                height: _movieDetailsStore.backdropHeight,
+                                height: widget
+                                    ._movieDetailsController.backdropHeight,
                                 width: double.infinity,
                                 child: Image.network(
-                                    _movieDetailsStore.movie!
+                                    widget._movieDetailsController.movie!
                                         .getFullBackdropUrl(),
                                     fit: BoxFit.cover),
                               ),
@@ -74,10 +74,10 @@ class _MovieDetailsState
                                 // Clip it cleanly.
                                 child: BackdropFilter(
                                   filter: ImageFilter.blur(
-                                      sigmaX:
-                                          _movieDetailsStore.backdropBlugSigma,
-                                      sigmaY:
-                                          _movieDetailsStore.backdropBlugSigma),
+                                      sigmaX: widget._movieDetailsController
+                                          .backdropBlugSigma,
+                                      sigmaY: widget._movieDetailsController
+                                          .backdropBlugSigma),
                                   child: Container(
                                     color: Colors.grey.withOpacity(0.1),
                                     alignment: Alignment.center,
@@ -96,7 +96,8 @@ class _MovieDetailsState
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16),
                                     child: MovieDetails(
-                                        movieDetailsStore: _movieDetailsStore),
+                                        movieDetailsController:
+                                            widget._movieDetailsController),
                                   ),
                                   SizedBox(
                                     height: 32,
@@ -117,13 +118,22 @@ class _MovieDetailsState
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16),
-                                    child: Text(
-                                        _movieDetailsStore.movie!.overview ??
-                                            ''),
+                                    child: Text(widget._movieDetailsController
+                                            .movie?.overview ??
+                                        ''),
                                   ),
                                   MoviesListSection(
-                                      movies: _movieDetailsStore.similarMovies,
-                                      sectionTitle: 'Similares')
+                                    movies: widget
+                                        ._movieDetailsController.similarMovies,
+                                    sectionTitle: 'Similares',
+                                    onEndReached: () {
+                                      widget._movieDetailsController
+                                          .fetchSimilarMovies(
+                                              int.parse(widget.id));
+                                    },
+                                    loading: widget._movieDetailsController
+                                        .loadingMoreSimilarMovies,
+                                  )
                                 ],
                               ),
                             ),
@@ -140,29 +150,29 @@ class _MovieDetailsState
 class MovieDetails extends StatelessWidget {
   const MovieDetails({
     Key? key,
-    required MovieDetailsStore movieDetailsStore,
-  })  : _movieDetailsStore = movieDetailsStore,
+    required MovieDetailsController movieDetailsController,
+  })  : _movieDetailsController = movieDetailsController,
         super(key: key);
 
-  final MovieDetailsStore _movieDetailsStore;
+  final MovieDetailsController _movieDetailsController;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MovieBanner(movieDetailsStore: _movieDetailsStore),
+        MovieBanner(movieDetailsController: _movieDetailsController),
         Padding(
           padding: const EdgeInsets.only(left: 16),
           child: SizedBox(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MovieInfo(movieDetailsStore: _movieDetailsStore),
+                MovieInfo(movieDetailsController: _movieDetailsController),
                 SizedBox(
                   height: 16,
                 ),
-                MovieStatistics(movieDetailsStore: _movieDetailsStore)
+                MovieStatistics(movieDetailsController: _movieDetailsController)
               ],
             ),
           ),
@@ -175,11 +185,11 @@ class MovieDetails extends StatelessWidget {
 class MovieInfo extends StatelessWidget {
   const MovieInfo({
     Key? key,
-    required MovieDetailsStore movieDetailsStore,
-  })  : _movieDetailsStore = movieDetailsStore,
+    required MovieDetailsController movieDetailsController,
+  })  : _movieDetailsController = movieDetailsController,
         super(key: key);
 
-  final MovieDetailsStore _movieDetailsStore;
+  final MovieDetailsController _movieDetailsController;
 
   @override
   Widget build(BuildContext context) {
@@ -196,13 +206,13 @@ class MovieInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              _movieDetailsStore.movie!.title ?? "",
+              _movieDetailsController.movie!.title ?? "",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             SizedBox(
               height: 16,
             ),
-            Text(_movieDetailsStore.movie!.releaseDate!
+            Text(_movieDetailsController.movie!.releaseDate!
                 .replaceAll('-', '/')
                 .split('/')
                 .reversed
@@ -217,11 +227,11 @@ class MovieInfo extends StatelessWidget {
 class MovieStatistics extends StatelessWidget {
   const MovieStatistics({
     Key? key,
-    required MovieDetailsStore movieDetailsStore,
-  })  : _movieDetailsStore = movieDetailsStore,
+    required MovieDetailsController movieDetailsController,
+  })  : _movieDetailsController = movieDetailsController,
         super(key: key);
 
-  final MovieDetailsStore _movieDetailsStore;
+  final MovieDetailsController _movieDetailsController;
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +245,8 @@ class MovieStatistics extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Row(
           children: [
-            PopularityIndicator(movieDetailsStore: _movieDetailsStore),
+            PopularityIndicator(
+                movieDetailsController: _movieDetailsController),
             Container(
               width: MediaQuery.of(context).size.width - 188 - 32 - 75,
               child: Padding(
@@ -245,12 +256,12 @@ class MovieStatistics extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        '${_movieDetailsStore.movie!.genres!.map((item) => item.name).join(', ')}.'),
+                        '${_movieDetailsController.movie!.genres!.map((item) => item.name).join(', ')}.'),
                     SizedBox(
                       height: 16,
                     ),
                     Text(
-                        'Duração: ${_movieDetailsStore.movie!.runtime.toString()}m')
+                        'Duração: ${_movieDetailsController.movie!.runtime.toString()}m')
                   ],
                 ),
               ),
@@ -265,11 +276,11 @@ class MovieStatistics extends StatelessWidget {
 class PopularityIndicator extends StatelessWidget {
   const PopularityIndicator({
     Key? key,
-    required MovieDetailsStore movieDetailsStore,
-  })  : _movieDetailsStore = movieDetailsStore,
+    required MovieDetailsController movieDetailsController,
+  })  : _movieDetailsController = movieDetailsController,
         super(key: key);
 
-  final MovieDetailsStore _movieDetailsStore;
+  final MovieDetailsController _movieDetailsController;
 
   @override
   Widget build(BuildContext context) {
@@ -291,12 +302,13 @@ class PopularityIndicator extends StatelessWidget {
             child: CircularProgressIndicator(
               strokeWidth: 6,
               color: Colors.purple,
-              value:
-                  double.parse('${_movieDetailsStore.movie!.voteAverage}') / 10,
+              value: double.parse(
+                      '${_movieDetailsController.movie!.voteAverage}') /
+                  10,
             ),
           ),
           Text(
-            '${((_movieDetailsStore.movie!.voteAverage! * 10).toInt().toString())}%',
+            '${((_movieDetailsController.movie!.voteAverage! * 10).toInt().toString())}%',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
         ],
@@ -308,11 +320,11 @@ class PopularityIndicator extends StatelessWidget {
 class MovieBanner extends StatelessWidget {
   const MovieBanner({
     Key? key,
-    required MovieDetailsStore movieDetailsStore,
-  })  : _movieDetailsStore = movieDetailsStore,
+    required MovieDetailsController movieDetailsController,
+  })  : _movieDetailsController = movieDetailsController,
         super(key: key);
 
-  final MovieDetailsStore _movieDetailsStore;
+  final MovieDetailsController _movieDetailsController;
 
   @override
   Widget build(BuildContext context) {
@@ -321,7 +333,7 @@ class MovieBanner extends StatelessWidget {
       child: SizedBox(
         height: 250,
         width: 140,
-        child: Image.network(_movieDetailsStore.movie!.getFullPosterUrl(),
+        child: Image.network(_movieDetailsController.movie!.getFullPosterUrl(),
             fit: BoxFit.cover),
       ),
     );
