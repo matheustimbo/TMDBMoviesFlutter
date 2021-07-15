@@ -11,7 +11,12 @@ part 'movie_details_controller.g.dart';
 @Injectable()
 class MovieDetailsController = _MovieDetailsControllerBase with _$MovieDetailsController;
 
-abstract class _MovieDetailsControllerBase with Store  {
+abstract class _MovieDetailsControllerBase with Store implements Disposable  {
+
+  @override
+  void dispose() {
+  }
+
   final MovieRepository _movieRepository = Modular.get<MovieRepository>();
 
   @observable

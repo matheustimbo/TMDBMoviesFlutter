@@ -13,8 +13,6 @@ class MovieDetailsPage extends StatefulWidget {
 
   MovieDetailsPage({Key? key, required this.id}) : super(key: key);
 
-  final MovieDetailsController _movieDetailsController =
-      new MovieDetailsController();
 
   @override
   _MovieDetailsState createState() => _MovieDetailsState();
@@ -25,7 +23,7 @@ class _MovieDetailsState
   @override
   void initState() {
     super.initState();
-    widget._movieDetailsController.firstFetch(int.parse(widget.id));
+    controller.firstFetch(int.parse(widget.id));
   }
 
   @override
@@ -34,18 +32,18 @@ class _MovieDetailsState
       return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            elevation: widget._movieDetailsController.appBarElevation,
+            elevation: controller.appBarElevation,
             backgroundColor: Colors.black
-                .withOpacity(widget._movieDetailsController.appBarOpacity),
+                .withOpacity(controller.appBarOpacity),
             title: Observer(builder: (_) {
-              return Text(widget._movieDetailsController.loading
+              return Text(controller.loading
                   ? 'Carregando'
-                  : widget._movieDetailsController.movie?.title ?? "");
+                  : controller.movie?.title ?? "");
             }),
           ),
           body: Observer(
             builder: (_) {
-              return widget._movieDetailsController.loading 
+              return controller.loading 
                   ? Center(
                       child: CircularProgressIndicator(
                         color: Colors.white,
@@ -53,7 +51,7 @@ class _MovieDetailsState
                     )
                   : NotificationListener<ScrollNotification>(
                       onNotification: (notification) {
-                        widget._movieDetailsController
+                        controller
                             .scrollListener(notification);
                         return true;
                       },
@@ -62,11 +60,10 @@ class _MovieDetailsState
                           Stack(
                             children: [
                               SizedBox(
-                                height: widget
-                                    ._movieDetailsController.backdropHeight,
+                                height: controller.backdropHeight,
                                 width: double.infinity,
                                 child: Image.network(
-                                    widget._movieDetailsController.movie!
+                                    controller.movie!
                                         .getFullBackdropUrl(),
                                     fit: BoxFit.cover),
                               ),
@@ -74,9 +71,9 @@ class _MovieDetailsState
                                 // Clip it cleanly.
                                 child: BackdropFilter(
                                   filter: ImageFilter.blur(
-                                      sigmaX: widget._movieDetailsController
+                                      sigmaX: controller
                                           .backdropBlugSigma,
-                                      sigmaY: widget._movieDetailsController
+                                      sigmaY: controller
                                           .backdropBlugSigma),
                                   child: Container(
                                     color: Colors.grey.withOpacity(0.1),
@@ -97,7 +94,7 @@ class _MovieDetailsState
                                         horizontal: 16),
                                     child: MovieDetails(
                                         movieDetailsController:
-                                            widget._movieDetailsController),
+                                            controller),
                                   ),
                                   SizedBox(
                                     height: 32,
@@ -118,20 +115,19 @@ class _MovieDetailsState
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16),
-                                    child: Text(widget._movieDetailsController
+                                    child: Text(controller
                                             .movie?.overview ??
                                         ''),
                                   ),
                                   MoviesListSection(
-                                    movies: widget
-                                        ._movieDetailsController.similarMovies,
+                                    movies: controller.similarMovies,
                                     sectionTitle: 'Similares',
                                     onEndReached: () {
-                                      widget._movieDetailsController
+                                      controller
                                           .fetchSimilarMovies(
                                               int.parse(widget.id));
                                     },
-                                    loading: widget._movieDetailsController
+                                    loading: controller
                                         .loadingMoreSimilarMovies,
                                   )
                                 ],
