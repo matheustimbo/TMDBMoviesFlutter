@@ -1,321 +1,122 @@
+/// poster_path : "/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg"
+/// adult : false
+/// overview : "From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences."
+/// release_date : "2016-08-03"
+/// genre_ids : [14,28,80]
+/// id : 297761
+/// original_title : "Suicide Squad"
+/// original_language : "en"
+/// title : "Suicide Squad"
+/// backdrop_path : "/ndlQ2Cuc3cjTL7lTynw6I4boP4S.jpg"
+/// popularity : 48.261451
+/// vote_count : 1466
+/// video : false
+/// vote_average : 5.91
+
 class Movie {
+  String? _posterPath;
   bool? _adult;
-  String? _backdropPath;
-  dynamic _belongsToCollection;
-  int? _budget;
-  List<Genres>? _genres;
-  String? _homepage;
-  int? _id;
-  String? _imdbId;
-  String? _originalLanguage;
-  String? _originalTitle;
   String? _overview;
-  double? _popularity;
-  dynamic _posterPath;
-  List<ProductionCompanies>? _productionCompanies;
-  List<ProductionCountries>? _productionCountries;
   String? _releaseDate;
-  int? _revenue;
-  int? _runtime;
-  List<SpokenLanguages>? _spokenLanguages;
-  String? _status;
-  String? _tagline;
+  List<int>? _genreIds;
+  int? _id;
+  String? _originalTitle;
+  String? _originalLanguage;
   String? _title;
+  String? _backdropPath;
+  double? _popularity;
+  int? _voteCount;
   bool? _video;
   num? _voteAverage;
-  int? _voteCount;
 
+  String? get posterPath => _posterPath;
   bool? get adult => _adult;
-  String? get backdropPath => _backdropPath;
-  dynamic get belongsToCollection => _belongsToCollection;
-  int? get budget => _budget;
-  List<Genres>? get genres => _genres;
-  String? get homepage => _homepage;
-  int? get id => _id;
-  String? get imdbId => _imdbId;
-  String? get originalLanguage => _originalLanguage;
-  String? get originalTitle => _originalTitle;
   String? get overview => _overview;
-  double? get popularity => _popularity;
-  dynamic get posterPath => _posterPath;
-  List<ProductionCompanies>? get productionCompanies => _productionCompanies;
-  List<ProductionCountries>? get productionCountries => _productionCountries;
   String? get releaseDate => _releaseDate;
-  int? get revenue => _revenue;
-  int? get runtime => _runtime;
-  List<SpokenLanguages>? get spokenLanguages => _spokenLanguages;
-  String? get status => _status;
-  String? get tagline => _tagline;
+  List<int>? get genreIds => _genreIds;
+  int? get id => _id;
+  String? get originalTitle => _originalTitle;
+  String? get originalLanguage => _originalLanguage;
   String? get title => _title;
+  String? get backdropPath => _backdropPath;
+  double? get popularity => _popularity;
+  int? get voteCount => _voteCount;
   bool? get video => _video;
   num? get voteAverage => _voteAverage;
-  int? get voteCount => _voteCount;
 
-  Movie(
-      {bool? adult,
-      String? backdropPath,
-      dynamic belongsToCollection,
-      int? budget,
-      List<Genres>? genres,
-      String? homepage,
-      int? id,
-      String? imdbId,
-      String? originalLanguage,
-      String? originalTitle,
-      String? overview,
-      double? popularity,
-      dynamic posterPath,
-      List<ProductionCompanies>? productionCompanies,
-      List<ProductionCountries>? productionCountries,
-      String? releaseDate,
-      int? revenue,
-      int? runtime,
-      List<SpokenLanguages>? spokenLanguages,
-      String? status,
-      String? tagline,
-      String? title,
-      bool? video,
-      double? voteAverage,
-      int? voteCount}) {
-    _adult = adult;
-    _backdropPath = backdropPath;
-    _belongsToCollection = belongsToCollection;
-    _budget = budget;
-    _genres = genres;
-    _homepage = homepage;
-    _id = id;
-    _imdbId = imdbId;
-    _originalLanguage = originalLanguage;
-    _originalTitle = originalTitle;
-    _overview = overview;
-    _popularity = popularity;
+  Movie({
+      String? posterPath, 
+      bool? adult, 
+      String? overview, 
+      String? releaseDate, 
+      List<int>? genreIds, 
+      int? id, 
+      String? originalTitle, 
+      String? originalLanguage, 
+      String? title, 
+      String? backdropPath, 
+      double? popularity, 
+      int? voteCount, 
+      bool? video, 
+      double? voteAverage}){
     _posterPath = posterPath;
-    _productionCompanies = productionCompanies;
-    _productionCountries = productionCountries;
+    _adult = adult;
+    _overview = overview;
     _releaseDate = releaseDate;
-    _revenue = revenue;
-    _runtime = runtime;
-    _spokenLanguages = spokenLanguages;
-    _status = status;
-    _tagline = tagline;
+    _genreIds = genreIds;
+    _id = id;
+    _originalTitle = originalTitle;
+    _originalLanguage = originalLanguage;
     _title = title;
+    _backdropPath = backdropPath;
+    _popularity = popularity;
+    _voteCount = voteCount;
     _video = video;
     _voteAverage = voteAverage;
-    _voteCount = voteCount;
-  }
+}
 
   Movie.fromJson(dynamic json) {
-    _adult = json["adult"];
-    _backdropPath = json["backdrop_path"];
-    _belongsToCollection = json["belongs_to_collection"];
-    _budget = json["budget"];
-    if (json["genres"] != null) {
-      _genres = [];
-      json["genres"].forEach((v) {
-        _genres?.add(Genres.fromJson(v));
-      });
-    }
-    _homepage = json["homepage"];
-    _id = json["id"];
-    _imdbId = json["imdb_id"];
-    _originalLanguage = json["original_language"];
-    _originalTitle = json["original_title"];
-    _overview = json["overview"];
-    _popularity = json["popularity"];
     _posterPath = json["poster_path"];
-    if (json["ProductionCompanies"] != null) {
-      _productionCompanies = [];
-      json["ProductionCompanies"].forEach((v) {
-        _productionCompanies?.add(ProductionCompanies.fromJson(v));
-      });
-    }
-    if (json["ProductionCountries"] != null) {
-      _productionCountries = [];
-      json["ProductionCountries"].forEach((v) {
-        _productionCountries?.add(ProductionCountries.fromJson(v));
-      });
-    }
+    _adult = json["adult"];
+    _overview = json["overview"];
     _releaseDate = json["release_date"];
-    _revenue = json["revenue"];
-    _runtime = json["runtime"];
-    if (json["SpokenLanguages"] != null) {
-      _spokenLanguages = [];
-      json["SpokenLanguages"].forEach((v) {
-        _spokenLanguages?.add(SpokenLanguages.fromJson(v));
-      });
-    }
-    _status = json["status"];
-    _tagline = json["tagline"];
+    _genreIds = json["genre_ids"] != null ? json["genre_ids"].cast<int>() : [];
+    _id = json["id"];
+    _originalTitle = json["original_title"];
+    _originalLanguage = json["original_language"];
     _title = json["title"];
+    _backdropPath = json["backdrop_path"];
+    _popularity = json["popularity"];
+    _voteCount = json["vote_count"];
     _video = json["video"];
     _voteAverage = json["vote_average"];
-    _voteCount = json["vote_count"];
   }
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
-    map["adult"] = _adult;
-    map["backdrop_path"] = _backdropPath;
-    map["belongs_to_collection"] = _belongsToCollection;
-    map["budget"] = _budget;
-    if (_genres != null) {
-      map["genres"] = _genres?.map((v) => v.toJson()).toList();
-    }
-    map["homepage"] = _homepage;
-    map["id"] = _id;
-    map["imdb_id"] = _imdbId;
-    map["original_language"] = _originalLanguage;
-    map["original_title"] = _originalTitle;
-    map["overview"] = _overview;
-    map["popularity"] = _popularity;
     map["poster_path"] = _posterPath;
-    if (_productionCompanies != null) {
-      map["ProductionCompanies"] =
-          _productionCompanies?.map((v) => v.toJson()).toList();
-    }
-    if (_productionCountries != null) {
-      map["ProductionCountries"] =
-          _productionCountries?.map((v) => v.toJson()).toList();
-    }
+    map["adult"] = _adult;
+    map["overview"] = _overview;
     map["release_date"] = _releaseDate;
-    map["revenue"] = _revenue;
-    map["runtime"] = _runtime;
-    if (_spokenLanguages != null) {
-      map["SpokenLanguages"] =
-          _spokenLanguages?.map((v) => v.toJson()).toList();
-    }
-    map["status"] = _status;
-    map["tagline"] = _tagline;
+    map["genre_ids"] = _genreIds;
+    map["id"] = _id;
+    map["original_title"] = _originalTitle;
+    map["original_language"] = _originalLanguage;
     map["title"] = _title;
+    map["backdrop_path"] = _backdropPath;
+    map["popularity"] = _popularity;
+    map["vote_count"] = _voteCount;
     map["video"] = _video;
     map["vote_average"] = _voteAverage;
-    map["vote_count"] = _voteCount;
     return map;
   }
 
-  String getFullImageUrl({required String path}) {
-    return 'https://image.tmdb.org/t/p/w500/$path';
-  }
-}
-
-/// iso_639_1 : "en"
-/// name : "English"
-
-class SpokenLanguages {
-  String? _iso6391;
-  String? _name;
-
-  String? get iso6391 => _iso6391;
-  String? get name => _name;
-
-  SpokenLanguages({String? iso6391, String? name}) {
-    _iso6391 = iso6391;
-    _name = name;
+  String getFullPosterUrl() {
+    return 'https://image.tmdb.org/t/p/w500/${this._posterPath}';
   }
 
-  SpokenLanguages.fromJson(dynamic json) {
-    _iso6391 = json["iso_639_1"];
-    _name = json["name"];
+  String getFullBackdropUrl() {
+    return 'https://image.tmdb.org/t/p/w1280/${this._backdropPath}';
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["iso_639_1"] = _iso6391;
-    map["name"] = _name;
-    return map;
-  }
-}
-
-class ProductionCountries {
-  String? _iso31661;
-  String? _name;
-
-  String? get iso31661 => _iso31661;
-  String? get name => _name;
-
-  ProductionCountries({String? iso31661, String? name}) {
-    _iso31661 = iso31661;
-    _name = name;
-  }
-
-  ProductionCountries.fromJson(dynamic json) {
-    _iso31661 = json["iso_3166_1"];
-    _name = json["name"];
-  }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["iso_3166_1"] = _iso31661;
-    map["name"] = _name;
-    return map;
-  }
-}
-
-/// id : 508
-/// logo_path : "/7PzJdsLGlR7oW4J0J5Xcd0pHGRg.png"
-/// name : "Regency Enterprises"
-/// origin_country : "US"
-
-class ProductionCompanies {
-  int? _id;
-  String? _logoPath;
-  String? _name;
-  String? _originCountry;
-
-  int? get id => _id;
-  String? get logoPath => _logoPath;
-  String? get name => _name;
-  String? get originCountry => _originCountry;
-
-  ProductionCompanies(
-      {int? id, String? logoPath, String? name, String? originCountry}) {
-    _id = id;
-    _logoPath = logoPath;
-    _name = name;
-    _originCountry = originCountry;
-  }
-
-  ProductionCompanies.fromJson(dynamic json) {
-    _id = json["id"];
-    _logoPath = json["logo_path"];
-    _name = json["name"];
-    _originCountry = json["origin_country"];
-  }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["id"] = _id;
-    map["logo_path"] = _logoPath;
-    map["name"] = _name;
-    map["origin_country"] = _originCountry;
-    return map;
-  }
-}
-
-/// id : 18
-/// name : "Drama"
-
-class Genres {
-  int? _id;
-  String? _name;
-
-  int? get id => _id;
-  String? get name => _name;
-
-  Genres({int? id, String? name}) {
-    _id = id;
-    _name = name;
-  }
-
-  Genres.fromJson(dynamic json) {
-    _id = json["id"];
-    _name = json["name"];
-  }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["id"] = _id;
-    map["name"] = _name;
-    return map;
-  }
 }
