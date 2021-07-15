@@ -16,7 +16,7 @@ class MovieWidget extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          Modular.to.pushNamed('${MovieDetailsPage.routeName}/${movie.id}');
+          Navigator.of(context).pushNamed('/start/home${MovieDetailsPage.routeName}/${movie.id}');
         },
         child: SizedBox(
           width: 200,
