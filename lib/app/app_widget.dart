@@ -9,7 +9,7 @@ class AppWidget extends StatelessWidget {
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.dark,
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/start/home',
+      initialRoute: '/',
     ).modular();
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart';
 import 'package:tmdbmovies/app/modules/home/controllers/movie_details_controller.dart';
+import 'package:tmdbmovies/shared/utils.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   static const routeName = '/movie';
@@ -12,7 +13,6 @@ class MovieDetailsPage extends StatefulWidget {
   final String id;
 
   MovieDetailsPage({Key? key, required this.id}) : super(key: key);
-
 
   @override
   _MovieDetailsState createState() => _MovieDetailsState();
@@ -33,8 +33,7 @@ class _MovieDetailsState
           extendBodyBehindAppBar: true,
           appBar: AppBar(
             elevation: controller.appBarElevation,
-            backgroundColor: Colors.black
-                .withOpacity(controller.appBarOpacity),
+            backgroundColor: Colors.black.withOpacity(controller.appBarOpacity),
             title: Observer(builder: (_) {
               return Text(controller.loading
                   ? 'Carregando'
@@ -43,7 +42,7 @@ class _MovieDetailsState
           ),
           body: Observer(
             builder: (_) {
-              return controller.loading 
+              return controller.loading
                   ? Center(
                       child: CircularProgressIndicator(
                         color: Colors.white,
@@ -51,8 +50,7 @@ class _MovieDetailsState
                     )
                   : NotificationListener<ScrollNotification>(
                       onNotification: (notification) {
-                        controller
-                            .scrollListener(notification);
+                        controller.scrollListener(notification);
                         return true;
                       },
                       child: Stack(
@@ -63,18 +61,15 @@ class _MovieDetailsState
                                 height: controller.backdropHeight,
                                 width: double.infinity,
                                 child: Image.network(
-                                    controller.movie!
-                                        .getFullBackdropUrl(),
+                                    controller.movie?.backdropPath ?? "",
                                     fit: BoxFit.cover),
                               ),
                               ClipRRect(
                                 // Clip it cleanly.
                                 child: BackdropFilter(
                                   filter: ImageFilter.blur(
-                                      sigmaX: controller
-                                          .backdropBlugSigma,
-                                      sigmaY: controller
-                                          .backdropBlugSigma),
+                                      sigmaX: controller.backdropBlugSigma,
+                                      sigmaY: controller.backdropBlugSigma),
                                   child: Container(
                                     color: Colors.grey.withOpacity(0.1),
                                     alignment: Alignment.center,
@@ -93,8 +88,7 @@ class _MovieDetailsState
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16),
                                     child: MovieDetails(
-                                        movieDetailsController:
-                                            controller),
+                                        movieDetailsController: controller),
                                   ),
                                   SizedBox(
                                     height: 32,
@@ -115,20 +109,18 @@ class _MovieDetailsState
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16),
-                                    child: Text(controller
-                                            .movie?.overview ??
-                                        ''),
+                                    child:
+                                        Text(controller.movie?.overview ?? ''),
                                   ),
                                   MoviesListSection(
                                     movies: controller.similarMovies,
                                     sectionTitle: 'Similares',
                                     onEndReached: () {
-                                      controller
-                                          .fetchSimilarMovies(
-                                              int.parse(widget.id));
+                                      controller.fetchSimilarMovies(
+                                          int.parse(widget.id));
                                     },
-                                    loading: controller
-                                        .loadingMoreSimilarMovies,
+                                    loading:
+                                        controller.loadingMoreSimilarMovies,
                                   )
                                 ],
                               ),
@@ -329,7 +321,7 @@ class MovieBanner extends StatelessWidget {
       child: SizedBox(
         height: 250,
         width: 140,
-        child: Image.network(_movieDetailsController.movie!.getFullPosterUrl(),
+        child: Image.network(_movieDetailsController.movie?.posterPath ?? "",
             fit: BoxFit.cover),
       ),
     );

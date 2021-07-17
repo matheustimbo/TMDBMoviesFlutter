@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'start_controller.dart';
+part of 'home_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'start_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$StartController on _StartControllerBase, Store {
-  final _$currentIndexAtom = Atom(name: '_StartControllerBase.currentIndex');
+mixin _$HomeController on _HomeControllerBase, Store {
+  final _$currentIndexAtom = Atom(name: '_HomeControllerBase.currentIndex');
 
   @override
   int get currentIndex {
@@ -22,6 +22,20 @@ mixin _$StartController on _StartControllerBase, Store {
     _$currentIndexAtom.reportWrite(value, super.currentIndex, () {
       super.currentIndex = value;
     });
+  }
+
+  final _$_HomeControllerBaseActionController =
+      ActionController(name: '_HomeControllerBase');
+
+  @override
+  void onTapBottomBar(int index) {
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+        name: '_HomeControllerBase.onTapBottomBar');
+    try {
+      return super.onTapBottomBar(index);
+    } finally {
+      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

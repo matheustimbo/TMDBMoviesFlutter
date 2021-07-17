@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:tmdbmovies/shared/models/genre_model.dart';
 import 'package:tmdbmovies/shared/models/movie_details_model.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
 
@@ -56,7 +57,7 @@ abstract class MoviesStoreBase with Store {
   bool loadingMoreNowPlayingMovies = false;
 
   @observable
-  List<Genres> genres = [];
+  List<Genre> genres = [];
 
   @observable
   bool loadingGenres = false;

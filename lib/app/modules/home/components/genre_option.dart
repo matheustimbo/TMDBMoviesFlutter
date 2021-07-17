@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tmdbmovies/shared/models/movie_details_model.dart';
+import 'package:tmdbmovies/shared/models/genre_model.dart';
 
 class GenreOption extends StatelessWidget {
   const GenreOption(
@@ -9,13 +9,12 @@ class GenreOption extends StatelessWidget {
       required this.onTapGenre})
       : super(key: key);
 
-  final Genres genre;
+  final Genre genre;
   final bool isSelected;
-  final Function(Genres genre) onTapGenre;
+  final Function(Genre genre) onTapGenre;
 
   @override
   Widget build(BuildContext context) {
-    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: InkWell(

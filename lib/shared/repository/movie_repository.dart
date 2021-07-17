@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:tmdbmovies/shared/constants.dart';
+import 'package:tmdbmovies/shared/models/genre_model.dart';
 import 'package:tmdbmovies/shared/models/movie_details_model.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
 
@@ -12,12 +13,12 @@ var dioOptions = BaseOptions(
 class MovieRepository {
   Dio dio = new Dio(dioOptions);
 
-  Future<List<Genres>> getMovieGenres() async {
+  Future<List<Genre>> getMovieGenres() async {
     var response = await dio.get('/genre/movie/list',
         queryParameters: {'api_key': API_KEY, 'language': 'pt-BR'});
 
     return (response.data['genres'] as List)
-        .map((item) => Genres.fromJson(item))
+        .map((item) => Genre.fromJson(item))
         .toList();
   }
 

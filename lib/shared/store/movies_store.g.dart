@@ -273,13 +273,13 @@ mixin _$MoviesStore on MoviesStoreBase, Store {
   final _$genresAtom = Atom(name: 'MoviesStoreBase.genres');
 
   @override
-  List<Genres> get genres {
+  List<Genre> get genres {
     _$genresAtom.reportRead();
     return super.genres;
   }
 
   @override
-  set genres(List<Genres> value) {
+  set genres(List<Genre> value) {
     _$genresAtom.reportWrite(value, super.genres, () {
       super.genres = value;
     });

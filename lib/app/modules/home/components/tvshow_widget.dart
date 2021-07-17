@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:tmdbmovies/app/modules/home/pages/movie_details_page.dart';
-import 'package:tmdbmovies/shared/models/movie_model.dart';
+import 'package:tmdbmovies/shared/models/tvshow_model.dart';
 import 'package:tmdbmovies/shared/utils.dart';
 
-class MovieWidget extends StatelessWidget {
-  const MovieWidget({Key? key, required this.movie}) : super(key: key);
+class TvshowWidget extends StatelessWidget {
+  const TvshowWidget({Key? key, required this.tvshow}) : super(key: key);
 
-  final Movie movie;
+  final Tvshow tvshow;
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +14,14 @@ class MovieWidget extends StatelessWidget {
         horizontal: 8,
       ),
       child: InkWell(
-        onTap: () {
-          Modular.to.pushNamed('${MovieDetailsPage.routeName}/${movie.id}');
-        },
+        onTap: () {},
         child: SizedBox(
           width: 200,
           height: 300,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Stack(children: [
-              Image.network(movie.posterPath ?? "", fit: BoxFit.cover),
+              Image.network(tvshow.posterPath ?? "", fit: BoxFit.cover),
               Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -50,11 +46,10 @@ class MovieWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          movie.title ?? "",
+                          tvshow.name ?? "",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                        Text(movie.originalTitle ?? ""),
                       ],
                     )),
               )

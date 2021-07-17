@@ -1,35 +1,13 @@
-/// adult : false
-/// backdrop_path : "/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg"
-/// belongs_to_collection : null
-/// budget : 63000000
-/// genres : [{"id":18,"name":"Drama"}]
-/// homepage : ""
-/// id : 550
-/// imdb_id : "tt0137523"
-/// original_language : "en"
-/// original_title : "Fight Club"
-/// overview : "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion."
-/// popularity : 0.5
-/// poster_path : null
-/// production_companies : [{"id":508,"logo_path":"/7PzJdsLGlR7oW4J0J5Xcd0pHGRg.png","name":"Regency Enterprises","origin_country":"US"},{"id":711,"logo_path":null,"name":"Fox 2000 Pictures","origin_country":""},{"id":20555,"logo_path":null,"name":"Taurus Film","origin_country":""},{"id":54050,"logo_path":null,"name":"Linson Films","origin_country":""},{"id":54051,"logo_path":null,"name":"Atman Entertainment","origin_country":""},{"id":54052,"logo_path":null,"name":"Knickerbocker Films","origin_country":""},{"id":25,"logo_path":"/qZCc1lty5FzX30aOCVRBLzaVmcp.png","name":"20th Century Fox","origin_country":"US"}]
-/// production_countries : [{"iso_3166_1":"US","name":"United States of America"}]
-/// release_date : "1999-10-12"
-/// revenue : 100853753
-/// runtime : 139
-/// spoken_languages : [{"iso_639_1":"en","name":"English"}]
-/// status : "Released"
-/// tagline : "How much can you know about yourself if you've never been in a fight?"
-/// title : "Fight Club"
-/// video : false
-/// vote_average : 7.8
-/// vote_count : 3439
+import 'package:tmdbmovies/shared/utils.dart';
+
+import 'genre_model.dart';
 
 class MovieDetails {
   bool? _adult;
   String? _backdropPath;
   dynamic? _belongsToCollection;
   int? _budget;
-  List<Genres>? _genres;
+  List<Genre>? _genres;
   String? _homepage;
   int? _id;
   String? _imdbId;
@@ -52,10 +30,10 @@ class MovieDetails {
   int? _voteCount;
 
   bool? get adult => _adult;
-  String? get backdropPath => _backdropPath;
+  String? get backdropPath => Utils.getFullBackdropUrl(_backdropPath);
   dynamic? get belongsToCollection => _belongsToCollection;
   int? get budget => _budget;
-  List<Genres>? get genres => _genres;
+  List<Genre>? get genres => _genres;
   String? get homepage => _homepage;
   int? get id => _id;
   String? get imdbId => _imdbId;
@@ -63,7 +41,7 @@ class MovieDetails {
   String? get originalTitle => _originalTitle;
   String? get overview => _overview;
   double? get popularity => _popularity;
-  dynamic? get posterPath => _posterPath;
+  String? get posterPath => Utils.getFullPosterUrl(_posterPath);
   List<Production_companies>? get productionCompanies => _productionCompanies;
   List<Production_countries>? get productionCountries => _productionCountries;
   String? get releaseDate => _releaseDate;
@@ -82,7 +60,7 @@ class MovieDetails {
       String? backdropPath,
       dynamic? belongsToCollection,
       int? budget,
-      List<Genres>? genres,
+      List<Genre>? genres,
       String? homepage,
       int? id,
       String? imdbId,
@@ -138,7 +116,7 @@ class MovieDetails {
     if (json["genres"] != null) {
       _genres = [];
       json["genres"].forEach((v) {
-        _genres?.add(Genres.fromJson(v));
+        _genres?.add(Genre.fromJson(v));
       });
     }
     _homepage = json["homepage"];
@@ -217,14 +195,6 @@ class MovieDetails {
     map["vote_average"] = _voteAverage;
     map["vote_count"] = _voteCount;
     return map;
-  }
-
-  String getFullPosterUrl() {
-    return 'https://image.tmdb.org/t/p/w500/${this._posterPath}';
-  }
-
-  String getFullBackdropUrl() {
-    return 'https://image.tmdb.org/t/p/w1280/${this._backdropPath}';
   }
 }
 
@@ -328,27 +298,3 @@ class Production_companies {
 /// id : 18
 /// name : "Drama"
 
-class Genres {
-  int? _id;
-  String? _name;
-
-  int? get id => _id;
-  String? get name => _name;
-
-  Genres({int? id, String? name}) {
-    _id = id;
-    _name = name;
-  }
-
-  Genres.fromJson(dynamic json) {
-    _id = json["id"];
-    _name = json["name"];
-  }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["id"] = _id;
-    map["name"] = _name;
-    return map;
-  }
-}
