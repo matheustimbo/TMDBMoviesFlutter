@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart';
+import 'package:tmdbmovies/app/modules/home/components/popularity_indicator.dart';
 import 'package:tmdbmovies/app/modules/home/components/video_player.dart';
 import 'package:tmdbmovies/app/modules/home/controllers/movie_details_controller.dart';
 import 'package:tmdbmovies/shared/utils.dart';
@@ -276,7 +277,9 @@ class MovieStatistics extends StatelessWidget {
         child: Row(
           children: [
             PopularityIndicator(
-                movieDetailsController: _movieDetailsController),
+                fontSize: 16,
+                voteAverage: _movieDetailsController.movie?.voteAverage,
+                size: 75),
             Container(
               width: MediaQuery.of(context).size.width - 188 - 32 - 75,
               child: Padding(
@@ -298,50 +301,6 @@ class MovieStatistics extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class PopularityIndicator extends StatelessWidget {
-  const PopularityIndicator({
-    Key? key,
-    required MovieDetailsController movieDetailsController,
-  })  : _movieDetailsController = movieDetailsController,
-        super(key: key);
-
-  final MovieDetailsController _movieDetailsController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 75,
-      height: 75,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          SizedBox(
-            width: 75,
-            height: 75,
-            child: CircularProgressIndicator(
-                strokeWidth: 6, color: Colors.white, value: 1),
-          ),
-          SizedBox(
-            width: 75,
-            height: 75,
-            child: CircularProgressIndicator(
-              strokeWidth: 6,
-              color: Colors.orangeAccent,
-              value: double.parse(
-                      '${_movieDetailsController.movie!.voteAverage}') /
-                  10,
-            ),
-          ),
-          Text(
-            '${((_movieDetailsController.movie!.voteAverage! * 10).toInt().toString())}%',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-        ],
       ),
     );
   }

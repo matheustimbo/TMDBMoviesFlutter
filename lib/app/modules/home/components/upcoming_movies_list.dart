@@ -51,6 +51,9 @@ class _UpcomingMoviesListState extends State<UpcomingMoviesList> {
                   Modular.to.pushNamed(
                       '${MovieDetailsPage.routeName}/${widget.upcomingMovies[index].id}');
                 },
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(24.0),
                   child: Stack(

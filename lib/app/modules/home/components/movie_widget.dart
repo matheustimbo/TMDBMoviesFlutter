@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:tmdbmovies/app/modules/home/components/popularity_indicator.dart';
 import 'package:tmdbmovies/app/modules/home/pages/movie_details_page.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
 
@@ -32,6 +33,7 @@ class MovieWidget extends StatelessWidget {
                     end: Alignment
                         .bottomCenter, // 10% of the width, so there are ten blinds.
                     colors: <Color>[
+                      Colors.black54,
                       Colors.transparent,
                       Colors.black54
                     ], // red to yellow
@@ -42,9 +44,35 @@ class MovieWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Column(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        if (movie.popularity != null)
+                          Text(
+                            movie.popularity!.round().toString(),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        Column(
+                          children: [
+                            PopularityIndicator(
+                              fontSize: 12,
+                              size: 48,
+                              voteAverage: movie.voteAverage,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(movie.voteCount.toString())
+                          ],
+                        ),
+                      ],
+                    ),
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -55,8 +83,10 @@ class MovieWidget extends StatelessWidget {
                         ),
                         Text(movie.originalTitle ?? ""),
                       ],
-                    )),
-              )
+                    )
+                  ],
+                ),
+              ),
             ]),
           ),
         ),
