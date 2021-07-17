@@ -3,6 +3,7 @@ import 'package:tmdbmovies/shared/constants.dart';
 import 'package:tmdbmovies/shared/models/genre_model.dart';
 import 'package:tmdbmovies/shared/models/movie_details_model.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
+import 'package:tmdbmovies/shared/models/video_model.dart';
 
 var dioOptions = BaseOptions(
   baseUrl: BASE_URL,
@@ -12,6 +13,16 @@ var dioOptions = BaseOptions(
 
 class MovieRepository {
   Dio dio = new Dio(dioOptions);
+
+  Future<List<Video>> getMovieYoutubeVideos(int id) async {
+    var response = await dio.get('/movie/$id/videos',
+        queryParameters: {'api_key': API_KEY, 'language': 'pt-BR'});
+
+    return (response.data['results'] as List)
+        .map((item) => Video.fromJson(item))
+        .where((Video video) => video.site == 'YouTube')
+        .toList();
+  }
 
   Future<List<Genre>> getMovieGenres() async {
     var response = await dio.get('/genre/movie/list',

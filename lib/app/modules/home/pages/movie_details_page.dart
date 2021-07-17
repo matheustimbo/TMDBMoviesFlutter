@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart';
+import 'package:tmdbmovies/app/modules/home/components/video_player.dart';
 import 'package:tmdbmovies/app/modules/home/controllers/movie_details_controller.dart';
 import 'package:tmdbmovies/shared/utils.dart';
 
@@ -57,12 +58,19 @@ class _MovieDetailsState
                         children: [
                           Stack(
                             children: [
-                              SizedBox(
+                              Container(
                                 height: controller.backdropHeight,
                                 width: double.infinity,
-                                child: Image.network(
-                                    controller.movie?.backdropPath ?? "",
-                                    fit: BoxFit.cover),
+                                child: !controller.playingVideo
+                                    ? Image.network(
+                                        controller.movie?.backdropPath ?? "",
+                                        fit: BoxFit.cover)
+                                    : VideoPlayer(
+                                        videoId:
+                                            controller.movieVideos[0].key ?? "",
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 300),
                               ),
                               ClipRRect(
                                 // Clip it cleanly.
@@ -79,8 +87,11 @@ class _MovieDetailsState
                             ],
                           ),
                           SingleChildScrollView(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 250),
+                            child: AnimatedPadding(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.easeInOut,
+                              padding: EdgeInsets.only(
+                                  top: controller.contentScrollPadding),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -125,7 +136,38 @@ class _MovieDetailsState
                                 ],
                               ),
                             ),
-                          )
+                          ),
+                          if (controller.hasVideoToPlay)
+                            Opacity(
+                              opacity: controller.playIconOpacity,
+                              child: Container(
+                                height: controller.backdropHeight,
+                                width: double.infinity,
+                                child: Center(
+                                  child: InkWell(
+                                    onTap: () {
+                                      if (controller.canPlayVideo) {
+                                        controller.togglePlayingVideo();
+                                      }
+                                    },
+                                    child: Container(
+                                      width: 60,
+                                      height: 60,
+                                      child: Icon(
+                                        controller.playingVideo
+                                            ? Icons.close
+                                            : Icons.play_arrow,
+                                        color: Colors.white,
+                                      ),
+                                      decoration: BoxDecoration(
+                                          color: Colors.black45,
+                                          borderRadius:
+                                              BorderRadius.circular(80)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
                         ],
                       ),
                     );

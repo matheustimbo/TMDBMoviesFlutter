@@ -34,6 +34,8 @@ dependencies:
   mobx: ^2.0.1
   flutter_mobx: ^2.0.0
   build_runner: ^2.0.6
+  skeleton_animation: ^0.1.4
+  youtube_player_flutter: ^8.0.0
 
 dev_dependencies:
   flutter_modular_test: ^1.0.1

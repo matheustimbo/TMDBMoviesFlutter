@@ -16,6 +16,13 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
       (_$backdropHeightComputed ??= Computed<double>(() => super.backdropHeight,
               name: '_MovieDetailsControllerBase.backdropHeight'))
           .value;
+  Computed<dynamic>? _$canPlayVideoComputed;
+
+  @override
+  dynamic get canPlayVideo =>
+      (_$canPlayVideoComputed ??= Computed<dynamic>(() => super.canPlayVideo,
+              name: '_MovieDetailsControllerBase.canPlayVideo'))
+          .value;
   Computed<double>? _$backdropBlugSigmaComputed;
 
   @override
@@ -30,6 +37,13 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
       (_$appBarOpacityComputed ??= Computed<double>(() => super.appBarOpacity,
               name: '_MovieDetailsControllerBase.appBarOpacity'))
           .value;
+  Computed<double>? _$playIconOpacityComputed;
+
+  @override
+  double get playIconOpacity => (_$playIconOpacityComputed ??= Computed<double>(
+          () => super.playIconOpacity,
+          name: '_MovieDetailsControllerBase.playIconOpacity'))
+      .value;
   Computed<double>? _$appBarElevationComputed;
 
   @override
@@ -37,6 +51,36 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
           () => super.appBarElevation,
           name: '_MovieDetailsControllerBase.appBarElevation'))
       .value;
+  Computed<bool>? _$hasVideoToPlayComputed;
+
+  @override
+  bool get hasVideoToPlay =>
+      (_$hasVideoToPlayComputed ??= Computed<bool>(() => super.hasVideoToPlay,
+              name: '_MovieDetailsControllerBase.hasVideoToPlay'))
+          .value;
+  Computed<double>? _$contentScrollPaddingComputed;
+
+  @override
+  double get contentScrollPadding => (_$contentScrollPaddingComputed ??=
+          Computed<double>(() => super.contentScrollPadding,
+              name: '_MovieDetailsControllerBase.contentScrollPadding'))
+      .value;
+
+  final _$playingVideoAtom =
+      Atom(name: '_MovieDetailsControllerBase.playingVideo');
+
+  @override
+  bool get playingVideo {
+    _$playingVideoAtom.reportRead();
+    return super.playingVideo;
+  }
+
+  @override
+  set playingVideo(bool value) {
+    _$playingVideoAtom.reportWrite(value, super.playingVideo, () {
+      super.playingVideo = value;
+    });
+  }
 
   final _$loadingAtom = Atom(name: '_MovieDetailsControllerBase.loading');
 
@@ -150,12 +194,36 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
     });
   }
 
+  final _$movieVideosAtom =
+      Atom(name: '_MovieDetailsControllerBase.movieVideos');
+
+  @override
+  List<Video> get movieVideos {
+    _$movieVideosAtom.reportRead();
+    return super.movieVideos;
+  }
+
+  @override
+  set movieVideos(List<Video> value) {
+    _$movieVideosAtom.reportWrite(value, super.movieVideos, () {
+      super.movieVideos = value;
+    });
+  }
+
   final _$firstFetchAsyncAction =
       AsyncAction('_MovieDetailsControllerBase.firstFetch');
 
   @override
   Future<void> firstFetch(int id) {
     return _$firstFetchAsyncAction.run(() => super.firstFetch(id));
+  }
+
+  final _$fetchVideosAsyncAction =
+      AsyncAction('_MovieDetailsControllerBase.fetchVideos');
+
+  @override
+  Future<void> fetchVideos(int id) {
+    return _$fetchVideosAsyncAction.run(() => super.fetchVideos(id));
   }
 
   final _$fetchMovieDetailsAsyncAction =
@@ -180,6 +248,17 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
       ActionController(name: '_MovieDetailsControllerBase');
 
   @override
+  void togglePlayingVideo() {
+    final _$actionInfo = _$_MovieDetailsControllerBaseActionController
+        .startAction(name: '_MovieDetailsControllerBase.togglePlayingVideo');
+    try {
+      return super.togglePlayingVideo();
+    } finally {
+      _$_MovieDetailsControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic scrollListener(ScrollNotification scrollNotification) {
     final _$actionInfo = _$_MovieDetailsControllerBaseActionController
         .startAction(name: '_MovieDetailsControllerBase.scrollListener');
@@ -193,6 +272,7 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
   @override
   String toString() {
     return '''
+playingVideo: ${playingVideo},
 loading: ${loading},
 movie: ${movie},
 scrolledPixels: ${scrolledPixels},
@@ -200,10 +280,15 @@ similarMovies: ${similarMovies},
 loadingSimilarMovies: ${loadingSimilarMovies},
 loadingMoreSimilarMovies: ${loadingMoreSimilarMovies},
 similarMoviesPage: ${similarMoviesPage},
+movieVideos: ${movieVideos},
 backdropHeight: ${backdropHeight},
+canPlayVideo: ${canPlayVideo},
 backdropBlugSigma: ${backdropBlugSigma},
 appBarOpacity: ${appBarOpacity},
-appBarElevation: ${appBarElevation}
+playIconOpacity: ${playIconOpacity},
+appBarElevation: ${appBarElevation},
+hasVideoToPlay: ${hasVideoToPlay},
+contentScrollPadding: ${contentScrollPadding}
     ''';
   }
 }
