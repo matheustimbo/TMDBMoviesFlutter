@@ -289,7 +289,7 @@ class PopularityIndicator extends StatelessWidget {
             height: 75,
             child: CircularProgressIndicator(
               strokeWidth: 6,
-              color: Colors.purple,
+              color: Colors.orangeAccent,
               value: double.parse(
                       '${_movieDetailsController.movie!.voteAverage}') /
                   10,

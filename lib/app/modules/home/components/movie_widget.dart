@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:tmdbmovies/app/modules/home/pages/movie_details_page.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
-import 'package:tmdbmovies/shared/utils.dart';
 
 class MovieWidget extends StatelessWidget {
   const MovieWidget({Key? key, required this.movie}) : super(key: key);
