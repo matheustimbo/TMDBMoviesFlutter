@@ -5,8 +5,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:tmdbmovies/app/modules/home/components/cast_list_section.dart';
+import 'package:tmdbmovies/app/modules/home/components/movie_banner.dart';
+import 'package:tmdbmovies/app/modules/home/components/movie_info.dart';
+import 'package:tmdbmovies/app/modules/home/components/movie_statistics.dart';
 import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart';
 import 'package:tmdbmovies/app/modules/home/components/popularity_indicator.dart';
+import 'package:tmdbmovies/app/modules/home/components/text_section.dart';
 import 'package:tmdbmovies/app/modules/home/components/video_player.dart';
 import 'package:tmdbmovies/app/modules/home/controllers/movie_details_controller.dart';
 import 'package:tmdbmovies/shared/utils.dart';
@@ -102,8 +106,7 @@ class _MovieDetailsState
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16),
-                                    child: MovieDetails(
-                                        movieDetailsController: controller),
+                                    child: _buildMovieInfoDetails(controller),
                                   ),
                                   SizedBox(
                                     height: 32,
@@ -200,183 +203,35 @@ class _MovieDetailsState
   }
 }
 
-class TextSection extends StatelessWidget {
-  const TextSection({Key? key, required this.title, required this.text})
-      : super(key: key);
-
-  final String title;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            )),
-        SizedBox(
-          height: 16,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(text),
-        )
-      ],
-    );
-  }
-}
-
-class MovieDetails extends StatelessWidget {
-  const MovieDetails({
-    Key? key,
-    required MovieDetailsController movieDetailsController,
-  })  : _movieDetailsController = movieDetailsController,
-        super(key: key);
-
-  final MovieDetailsController _movieDetailsController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        MovieBanner(movieDetailsController: _movieDetailsController),
-        Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: SizedBox(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MovieInfo(movieDetailsController: _movieDetailsController),
-                SizedBox(
-                  height: 16,
-                ),
-                MovieStatistics(movieDetailsController: _movieDetailsController)
-              ],
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class MovieInfo extends StatelessWidget {
-  const MovieInfo({
-    Key? key,
-    required MovieDetailsController movieDetailsController,
-  })  : _movieDetailsController = movieDetailsController,
-        super(key: key);
-
-  final MovieDetailsController _movieDetailsController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width - 188,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.black87,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              _movieDetailsController.movie!.title ?? "",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(_movieDetailsController.movie!.releaseDate!
-                .replaceAll('-', '/')
-                .split('/')
-                .reversed
-                .join('/'))
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class MovieStatistics extends StatelessWidget {
-  const MovieStatistics({
-    Key? key,
-    required MovieDetailsController movieDetailsController,
-  })  : _movieDetailsController = movieDetailsController,
-        super(key: key);
-
-  final MovieDetailsController _movieDetailsController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width - 188,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.black87,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: Row(
-          children: [
-            PopularityIndicator(
-                fontSize: 16,
-                voteAverage: _movieDetailsController.movie?.voteAverage,
-                size: 75),
-            Container(
-              width: MediaQuery.of(context).size.width - 188 - 32 - 75,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        '${_movieDetailsController.movie!.genres!.map((item) => item.name).join(', ')}.'),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                        'Duração: ${_movieDetailsController.movie!.runtime.toString()}m')
-                  ],
-                ),
+Widget _buildMovieInfoDetails(MovieDetailsController movieDetailsController) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      MovieBanner(
+          height: 250,
+          width: 140,
+          bannerUrl: movieDetailsController.movie?.posterPath ?? ""),
+      Padding(
+        padding: const EdgeInsets.only(left: 16),
+        child: SizedBox(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              MovieInfo(
+                  title: movieDetailsController.movie?.title,
+                  originalTitle: movieDetailsController.movie?.originalTitle,
+                  releaseDate: movieDetailsController.movie?.releaseDate),
+              SizedBox(
+                height: 16,
               ),
-            ),
-          ],
+              MovieStatistics(
+                  voteAverage: movieDetailsController.movie?.voteAverage,
+                  movieGenres: movieDetailsController.movie!.genres,
+                  runtime: movieDetailsController.movie!.runtime)
+            ],
+          ),
         ),
-      ),
-    );
-  }
-}
-
-class MovieBanner extends StatelessWidget {
-  const MovieBanner({
-    Key? key,
-    required MovieDetailsController movieDetailsController,
-  })  : _movieDetailsController = movieDetailsController,
-        super(key: key);
-
-  final MovieDetailsController _movieDetailsController;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: SizedBox(
-        height: 250,
-        width: 140,
-        child: Image.network(_movieDetailsController.movie?.posterPath ?? "",
-            fit: BoxFit.cover),
-      ),
-    );
-  }
+      )
+    ],
+  );
 }
