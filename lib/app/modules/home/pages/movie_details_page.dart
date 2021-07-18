@@ -35,69 +35,43 @@ class _MovieDetailsState
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      return Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            elevation: controller.appBarElevation,
-            backgroundColor: Colors.black.withOpacity(controller.appBarOpacity),
-            title: Observer(builder: (_) {
-              return Text(controller.loading
-                  ? 'Carregando'
-                  : controller.movie?.title ?? "");
-            }),
-          ),
-          body: Observer(
-            builder: (_) {
-              return controller.loading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
-                    )
-                  : NotificationListener<ScrollNotification>(
-                      onNotification: (notification) {
-                        controller.scrollListener(notification);
-                        return true;
-                      },
-                      child: Stack(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                height: controller.backdropHeight,
-                                width: double.infinity,
-                                child: !controller.playingVideo
-                                    ? Image.network(
-                                        controller.movie?.backdropPath ?? "",
-                                        fit: BoxFit.cover)
-                                    : VideoPlayer(
-                                        videoId:
-                                            controller.movieVideos[0].key ?? "",
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 300),
-                              ),
-                              ClipRRect(
-                                // Clip it cleanly.
-                                child: BackdropFilter(
-                                  filter: ImageFilter.blur(
-                                      sigmaX: controller.backdropBlugSigma,
-                                      sigmaY: controller.backdropBlugSigma),
-                                  child: Container(
-                                    color: Colors.grey.withOpacity(0.1),
-                                    alignment: Alignment.center,
-                                  ),
-                                ),
-                              ),
-                            ],
+    return Scaffold(
+        extendBodyBehindAppBar: true,
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              pinned: true,
+              snap: false,
+              floating: false,
+              expandedHeight: 300,
+              flexibleSpace: FlexibleSpaceBar(
+                collapseMode: CollapseMode.parallax,
+                title: Observer(builder: (_) {
+                  return Text(controller.loading
+                      ? 'Carregando'
+                      : controller.movie?.title ?? "");
+                }),
+                background: _buildSliverAppBarBackground(context),
+              ),
+            ),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              Observer(
+                builder: (_) {
+                  return controller.loading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
                           ),
-                          SingleChildScrollView(
-                            child: AnimatedPadding(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.easeInOut,
-                              padding: EdgeInsets.only(
-                                  top: controller.contentScrollPadding),
+                        )
+                      : NotificationListener<ScrollNotification>(
+                          onNotification: (notification) {
+                            controller.scrollListener(notification);
+                            return true;
+                          },
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 32),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -161,42 +135,71 @@ class _MovieDetailsState
                               ),
                             ),
                           ),
-                          if (controller.hasVideoToPlay)
-                            Opacity(
-                              opacity: controller.playIconOpacity,
-                              child: Container(
-                                height: controller.backdropHeight,
-                                width: double.infinity,
-                                child: Center(
-                                  child: InkWell(
-                                    onTap: () {
-                                      if (controller.canPlayVideo) {
-                                        controller.togglePlayingVideo();
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 60,
-                                      height: 60,
-                                      child: Icon(
-                                        controller.playingVideo
-                                            ? Icons.close
-                                            : Icons.play_arrow,
-                                        color: Colors.white,
-                                      ),
-                                      decoration: BoxDecoration(
-                                          color: Colors.black45,
-                                          borderRadius:
-                                              BorderRadius.circular(80)),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                        ],
-                      ),
-                    );
-            },
-          ));
+                        );
+                },
+              )
+            ]))
+          ],
+        ));
+  }
+
+  Widget _buildSliverAppBarBackground(BuildContext context) {
+    return Observer(builder: (_) {
+      return Stack(
+        children: [
+          Container(
+            height: controller.backdropHeight,
+            width: double.infinity,
+            child: !controller.playingVideo
+                ? Image.network(controller.movie?.backdropPath ?? "",
+                    fit: BoxFit.cover)
+                : VideoPlayer(
+                    videoId: controller.movieVideos[0].key ?? "",
+                    width: MediaQuery.of(context).size.width,
+                    height: 300),
+          ),
+          if (!controller.playingVideo)
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment
+                      .bottomCenter, // 10% of the width, so there are ten blinds.
+                  colors: <Color>[
+                    Colors.transparent,
+                    Colors.black54
+                  ], // red to yellow
+                  tileMode:
+                      TileMode.repeated, // repeats the gradient over the canvas
+                ),
+              ),
+            ),
+          if (controller.hasVideoToPlay && !controller.playingVideo)
+            Opacity(
+              opacity: controller.playIconOpacity,
+              child: Center(
+                child: InkWell(
+                  onTap: () {
+                    if (controller.canPlayVideo) {
+                      controller.togglePlayingVideo();
+                    }
+                  },
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    child: Icon(
+                      controller.playingVideo ? Icons.close : Icons.play_arrow,
+                      color: Colors.white,
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.black45,
+                        borderRadius: BorderRadius.circular(80)),
+                  ),
+                ),
+              ),
+            )
+        ],
+      );
     });
   }
 }
