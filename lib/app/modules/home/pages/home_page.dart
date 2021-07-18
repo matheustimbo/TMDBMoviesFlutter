@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:tmdbmovies/app/modules/home/controllers/home_controller.dart';
 import 'package:tmdbmovies/app/modules/home/pages/movies_list_page.dart';
 import 'package:tmdbmovies/app/modules/home/pages/tvshows_list_page.dart';
+import 'package:tmdbmovies/shared/strings.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,11 +27,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.movie),
-                label: 'Filmes',
+                label: Strings.MOVIES,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.tv),
-                label: 'Séries',
+                label: Strings.TVSHOWS,
               ),
             ],
           );

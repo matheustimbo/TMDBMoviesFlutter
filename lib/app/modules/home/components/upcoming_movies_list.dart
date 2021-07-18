@@ -4,6 +4,7 @@ import 'package:skeleton_animation/skeleton_animation.dart';
 import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
 import 'package:tmdbmovies/app/modules/home/pages/movie_details_page.dart';
+import 'package:tmdbmovies/shared/strings.dart';
 
 class UpcomingMoviesList extends StatefulWidget {
   UpcomingMoviesList(
@@ -40,7 +41,7 @@ class _UpcomingMoviesListState extends State<UpcomingMoviesList> {
         Padding(
           padding: const EdgeInsets.all(16),
           child: Text(
-            'Vindo aí',
+            Strings.UPCOMING,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
         ),

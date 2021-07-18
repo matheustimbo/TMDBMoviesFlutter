@@ -6,6 +6,7 @@ import 'package:tmdbmovies/app/modules/home/components/tvshow_list_section.dart'
 import 'package:tmdbmovies/app/modules/home/controllers/tvshows_list_controller.dart';
 import 'package:tmdbmovies/shared/models/genre_model.dart';
 import 'package:tmdbmovies/shared/store/tvshows_store.dart';
+import 'package:tmdbmovies/shared/strings.dart';
 
 class TvshowsListPage extends StatefulWidget {
   final String title;
@@ -58,14 +59,14 @@ class TvshowsListPageState extends State<TvshowsListPage>
             }),
             Observer(builder: (_) {
               return TvshowsListSection(
-                  sectionTitle: 'Popular',
+                  sectionTitle: Strings.POPULAR,
                   tvshows: _tvshowsListController.filteredPopularTvshows,
                   onEndReached: _tvshowsListController.fetchPopularTvshows,
                   loading: _tvshowStore.loadingMorePopularTvshows);
             }),
             Observer(builder: (_) {
               return TvshowsListSection(
-                  sectionTitle: 'Melhor avaliados',
+                  sectionTitle: Strings.TOP_RATED,
                   tvshows: _tvshowsListController.filteredTopRatedTvshows,
                   onEndReached: _tvshowsListController.fetchTopRatedTvshows,
                   loading: _tvshowStore.loadingMorePopularTvshows);

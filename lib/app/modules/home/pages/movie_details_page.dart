@@ -13,6 +13,7 @@ import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart'
 import 'package:tmdbmovies/app/modules/home/components/text_section.dart';
 import 'package:tmdbmovies/app/modules/home/components/video_player.dart';
 import 'package:tmdbmovies/app/modules/home/controllers/movie_details_controller.dart';
+import 'package:tmdbmovies/shared/strings.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   static const routeName = '/movie';
@@ -51,8 +52,8 @@ class _MovieDetailsState
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(controller.loading
-                        ? 'Carregando'
-                        : controller.movie?.title ?? ""),
+                        ? Strings.LOADING
+                        : controller.movie?.title ?? Strings.TITLE_NOT_FOUND),
                   );
                 }),
                 background: _buildSliverAppBarBackground(context),
@@ -88,46 +89,46 @@ class _MovieDetailsState
                                     height: 32,
                                   ),
                                   TextSection(
-                                      title: 'Resumo',
+                                      title: Strings.OVERVIEW,
                                       text: controller.movie?.overview ??
-                                          "Não encontrado"),
+                                          Strings.NOT_FOUND),
                                   SizedBox(
                                     height: 16,
                                   ),
                                   TextSection(
-                                      title: 'Diretor(a)',
+                                      title: Strings.DIRECTOR,
                                       text: controller.movieDirector?.name ??
-                                          "Não encontrado"),
+                                          Strings.NOT_FOUND),
                                   SizedBox(
                                     height: 16,
                                   ),
                                   TextSection(
-                                      title: 'Orçamento',
+                                      title: Strings.BUDGET,
                                       text: controller.movie?.budget != null
                                           ? widget.currencyFormatter
                                               .format(controller.movie!.budget)
                                               .toString()
-                                          : "Não encontrado"),
+                                          : Strings.NOT_FOUND),
                                   SizedBox(
                                     height: 16,
                                   ),
                                   TextSection(
-                                      title: 'Receita',
+                                      title: Strings.REVENUE,
                                       text: controller.movie?.revenue != null
                                           ? widget.currencyFormatter
                                               .format(controller.movie!.revenue)
                                               .toString()
-                                          : "Não encontrado"),
+                                          : Strings.NOT_FOUND),
                                   SizedBox(
                                     height: 32,
                                   ),
                                   CastListSection(
-                                    title: 'Atores',
+                                    title: Strings.ACTORS,
                                     cast: controller.movieActors,
                                   ),
                                   MoviesListSection(
                                     movies: controller.similarMovies,
-                                    sectionTitle: 'Similares',
+                                    sectionTitle: Strings.SIMILARS,
                                     onEndReached: () {
                                       controller.fetchSimilarMovies(
                                           int.parse(widget.id));

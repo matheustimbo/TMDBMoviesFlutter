@@ -7,6 +7,7 @@ import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart'
 import 'package:tmdbmovies/app/modules/home/components/upcoming_movies_list.dart';
 import 'package:tmdbmovies/app/modules/home/controllers/movies_list_controller.dart';
 import 'package:tmdbmovies/shared/models/genre_model.dart';
+import 'package:tmdbmovies/shared/strings.dart';
 import '../../../../shared/store/movies_store.dart';
 
 class MovieListPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _MovieListPageState extends State<MovieListPage>
     super.build(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text('Filmes'),
+          title: Text(Strings.MOVIES),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -65,7 +66,7 @@ class _MovieListPageState extends State<MovieListPage>
               Observer(
                   builder: (_) => MoviesListSection(
                         movies: _moviesListController.filteredPopularMovies,
-                        sectionTitle: 'Popular',
+                        sectionTitle: Strings.POPULAR,
                         onEndReached: _moviesListController.fetchPopularMovies,
                         loading: _moviesStore.loadingPopularMovies,
                         loadingMore: _moviesStore.loadingMorePopularMovies,
@@ -73,7 +74,7 @@ class _MovieListPageState extends State<MovieListPage>
               Observer(
                   builder: (_) => MoviesListSection(
                         movies: _moviesListController.filteredNowPlayingMovies,
-                        sectionTitle: 'Em cartaz',
+                        sectionTitle: Strings.NOW_PLAYING,
                         onEndReached:
                             _moviesListController.fetchNowPlayingMovies,
                         loading: _moviesStore.loadingNowPlayingMovies,
@@ -82,7 +83,7 @@ class _MovieListPageState extends State<MovieListPage>
               Observer(
                   builder: (_) => MoviesListSection(
                         movies: _moviesListController.filteredTopRatedMovies,
-                        sectionTitle: 'Melhor avaliados',
+                        sectionTitle: Strings.TOP_RATED,
                         onEndReached: _moviesListController.fetchTopRatedMovies,
                         loading: _moviesStore.loadingTopRatedMovies,
                         loadingMore: _moviesStore.loadingMoreTopRatedMovies,
