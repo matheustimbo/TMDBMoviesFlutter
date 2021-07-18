@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tmdbmovies/shared/models/tvshow_model.dart';
-import 'package:tmdbmovies/shared/utils.dart';
 
 class TvshowWidget extends StatelessWidget {
   const TvshowWidget({Key? key, required this.tvshow}) : super(key: key);

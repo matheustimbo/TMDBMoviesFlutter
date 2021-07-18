@@ -9,11 +9,9 @@ import 'package:tmdbmovies/app/modules/home/components/movie_banner.dart';
 import 'package:tmdbmovies/app/modules/home/components/movie_info.dart';
 import 'package:tmdbmovies/app/modules/home/components/movie_statistics.dart';
 import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart';
-import 'package:tmdbmovies/app/modules/home/components/popularity_indicator.dart';
 import 'package:tmdbmovies/app/modules/home/components/text_section.dart';
 import 'package:tmdbmovies/app/modules/home/components/video_player.dart';
 import 'package:tmdbmovies/app/modules/home/controllers/movie_details_controller.dart';
-import 'package:tmdbmovies/shared/utils.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   static const routeName = '/movie';

@@ -22,7 +22,6 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoId,

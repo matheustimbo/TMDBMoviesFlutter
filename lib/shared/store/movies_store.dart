@@ -1,6 +1,5 @@
 import 'package:mobx/mobx.dart';
 import 'package:tmdbmovies/shared/models/genre_model.dart';
-import 'package:tmdbmovies/shared/models/movie_details_model.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
 
 part 'movies_store.g.dart';

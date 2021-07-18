@@ -2,7 +2,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 import 'package:tmdbmovies/app/modules/home/components/genre_option.dart';
-import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart';
 import 'package:tmdbmovies/app/modules/home/components/tvshow_list_section.dart';
 import 'package:tmdbmovies/app/modules/home/controllers/tvshows_list_controller.dart';
 import 'package:tmdbmovies/shared/models/genre_model.dart';
