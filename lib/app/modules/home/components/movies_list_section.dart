@@ -63,7 +63,10 @@ class _MoviesListSectionState extends State<MoviesListSection> {
               ],
             ),
           ),
-          Container(
+          !widget.loading && widget.movies.length == 0 ? Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text('Não foram encontrados filmes nestes parâmetros'),
+          ) : Container(
             height: 300,
             child: ListView.builder(
                 controller: _scrollController,
