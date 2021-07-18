@@ -43,39 +43,6 @@ abstract class _MovieDetailsControllerBase with Store implements Disposable {
   MovieDetails? movie;
 
   @observable
-  double scrolledPixels = 0;
-
-  @computed
-  double get backdropHeight => scrolledPixels > 400 ? 0 : 400 - scrolledPixels;
-
-  @computed
-  get canPlayVideo => scrolledPixels <= 50;
-
-  @computed
-  double get backdropBlugSigma => scrolledPixels > 200
-      ? 5
-      : scrolledPixels <= 0
-          ? 0
-          : scrolledPixels / 40;
-
-  @computed
-  double get appBarOpacity => scrolledPixels > 200
-      ? 1
-      : scrolledPixels <= 0
-          ? 0
-          : scrolledPixels / 200;
-
-  @computed
-  double get playIconOpacity => scrolledPixels > 100
-      ? 0
-      : scrolledPixels > 50
-          ? 1 - ((scrolledPixels - 50) / 50)
-          : 1;
-
-  @computed
-  double get appBarElevation => appBarOpacity * 10;
-
-  @observable
   List<Movie> similarMovies = [];
 
   @observable
@@ -92,9 +59,6 @@ abstract class _MovieDetailsControllerBase with Store implements Disposable {
 
   @computed
   bool get hasVideoToPlay => movieVideos.length > 0;
-
-  @computed
-  double get contentScrollPadding => playingVideo ? 432 : 250;
 
   @computed
   Crew? get movieDirector => movieCrew.length > 0
@@ -184,14 +148,6 @@ abstract class _MovieDetailsControllerBase with Store implements Disposable {
       loadingMoreSimilarMovies = false;
       loadingSimilarMovies = false;
       print("catch");
-    }
-  }
-
-  @action
-  scrollListener(ScrollNotification scrollNotification) {
-    if (scrollNotification.metrics.axisDirection == AxisDirection.down ||
-        scrollNotification.metrics.axisDirection == AxisDirection.up) {
-      scrolledPixels = scrollNotification.metrics.pixels;
     }
   }
 }

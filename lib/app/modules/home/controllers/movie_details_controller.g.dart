@@ -9,48 +9,6 @@ part of 'movie_details_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
-  Computed<double>? _$backdropHeightComputed;
-
-  @override
-  double get backdropHeight =>
-      (_$backdropHeightComputed ??= Computed<double>(() => super.backdropHeight,
-              name: '_MovieDetailsControllerBase.backdropHeight'))
-          .value;
-  Computed<dynamic>? _$canPlayVideoComputed;
-
-  @override
-  dynamic get canPlayVideo =>
-      (_$canPlayVideoComputed ??= Computed<dynamic>(() => super.canPlayVideo,
-              name: '_MovieDetailsControllerBase.canPlayVideo'))
-          .value;
-  Computed<double>? _$backdropBlugSigmaComputed;
-
-  @override
-  double get backdropBlugSigma => (_$backdropBlugSigmaComputed ??=
-          Computed<double>(() => super.backdropBlugSigma,
-              name: '_MovieDetailsControllerBase.backdropBlugSigma'))
-      .value;
-  Computed<double>? _$appBarOpacityComputed;
-
-  @override
-  double get appBarOpacity =>
-      (_$appBarOpacityComputed ??= Computed<double>(() => super.appBarOpacity,
-              name: '_MovieDetailsControllerBase.appBarOpacity'))
-          .value;
-  Computed<double>? _$playIconOpacityComputed;
-
-  @override
-  double get playIconOpacity => (_$playIconOpacityComputed ??= Computed<double>(
-          () => super.playIconOpacity,
-          name: '_MovieDetailsControllerBase.playIconOpacity'))
-      .value;
-  Computed<double>? _$appBarElevationComputed;
-
-  @override
-  double get appBarElevation => (_$appBarElevationComputed ??= Computed<double>(
-          () => super.appBarElevation,
-          name: '_MovieDetailsControllerBase.appBarElevation'))
-      .value;
   Computed<bool>? _$hasVideoToPlayComputed;
 
   @override
@@ -58,13 +16,6 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
       (_$hasVideoToPlayComputed ??= Computed<bool>(() => super.hasVideoToPlay,
               name: '_MovieDetailsControllerBase.hasVideoToPlay'))
           .value;
-  Computed<double>? _$contentScrollPaddingComputed;
-
-  @override
-  double get contentScrollPadding => (_$contentScrollPaddingComputed ??=
-          Computed<double>(() => super.contentScrollPadding,
-              name: '_MovieDetailsControllerBase.contentScrollPadding'))
-      .value;
   Computed<Crew?>? _$movieDirectorComputed;
 
   @override
@@ -185,22 +136,6 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
   set movie(MovieDetails? value) {
     _$movieAtom.reportWrite(value, super.movie, () {
       super.movie = value;
-    });
-  }
-
-  final _$scrolledPixelsAtom =
-      Atom(name: '_MovieDetailsControllerBase.scrolledPixels');
-
-  @override
-  double get scrolledPixels {
-    _$scrolledPixelsAtom.reportRead();
-    return super.scrolledPixels;
-  }
-
-  @override
-  set scrolledPixels(double value) {
-    _$scrolledPixelsAtom.reportWrite(value, super.scrolledPixels, () {
-      super.scrolledPixels = value;
     });
   }
 
@@ -351,17 +286,6 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
   }
 
   @override
-  dynamic scrollListener(ScrollNotification scrollNotification) {
-    final _$actionInfo = _$_MovieDetailsControllerBaseActionController
-        .startAction(name: '_MovieDetailsControllerBase.scrollListener');
-    try {
-      return super.scrollListener(scrollNotification);
-    } finally {
-      _$_MovieDetailsControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 movieCrew: ${movieCrew},
@@ -371,20 +295,12 @@ loadingCast: ${loadingCast},
 playingVideo: ${playingVideo},
 loading: ${loading},
 movie: ${movie},
-scrolledPixels: ${scrolledPixels},
 similarMovies: ${similarMovies},
 loadingSimilarMovies: ${loadingSimilarMovies},
 loadingMoreSimilarMovies: ${loadingMoreSimilarMovies},
 similarMoviesPage: ${similarMoviesPage},
 movieVideos: ${movieVideos},
-backdropHeight: ${backdropHeight},
-canPlayVideo: ${canPlayVideo},
-backdropBlugSigma: ${backdropBlugSigma},
-appBarOpacity: ${appBarOpacity},
-playIconOpacity: ${playIconOpacity},
-appBarElevation: ${appBarElevation},
 hasVideoToPlay: ${hasVideoToPlay},
-contentScrollPadding: ${contentScrollPadding},
 movieDirector: ${movieDirector},
 movieActors: ${movieActors}
     ''';

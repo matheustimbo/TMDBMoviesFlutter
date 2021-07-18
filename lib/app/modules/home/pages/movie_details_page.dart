@@ -154,14 +154,14 @@ class _MovieDetailsState
       return Stack(
         children: [
           Container(
-            height: controller.backdropHeight,
+            height: 400,
             width: double.infinity,
             child: !controller.playingVideo
                 ? ImageWithPlaceholder(url: controller.movie?.backdropPath)
                 : VideoPlayer(
                     videoId: controller.movieVideos[0].key ?? "",
                     width: MediaQuery.of(context).size.width,
-                    height: 300),
+                    height: 400),
           ),
           if (!controller.playingVideo)
             Container(
@@ -185,9 +185,7 @@ class _MovieDetailsState
               child: Center(
                 child: InkWell(
                   onTap: () {
-                    if (controller.canPlayVideo) {
-                      controller.togglePlayingVideo();
-                    }
+                    controller.togglePlayingVideo();
                   },
                   child: Container(
                     width: 60,
