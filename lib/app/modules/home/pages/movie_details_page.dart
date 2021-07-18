@@ -132,7 +132,8 @@ class _MovieDetailsState
                                       controller.fetchSimilarMovies(
                                           int.parse(widget.id));
                                     },
-                                    loading:
+                                    loading: controller.loadingSimilarMovies,
+                                    loadingMore:
                                         controller.loadingMoreSimilarMovies,
                                   )
                                 ],

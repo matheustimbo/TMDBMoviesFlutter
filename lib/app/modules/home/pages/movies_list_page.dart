@@ -40,6 +40,7 @@ class _MovieListPageState extends State<MovieListPage>
               Observer(builder: (_) {
                 return UpcomingMoviesList(
                   upcomingMovies: _moviesStore.upcomingMovies,
+                  loading: _moviesStore.loadingUpcomingMovies,
                 );
               }),
               Observer(builder: (_) {
@@ -66,7 +67,8 @@ class _MovieListPageState extends State<MovieListPage>
                         movies: _moviesListController.filteredPopularMovies,
                         sectionTitle: 'Popular',
                         onEndReached: _moviesListController.fetchPopularMovies,
-                        loading: _moviesStore.loadingMorePopularMovies,
+                        loading: _moviesStore.loadingPopularMovies,
+                        loadingMore: _moviesStore.loadingMorePopularMovies,
                       )),
               Observer(
                   builder: (_) => MoviesListSection(
@@ -74,14 +76,16 @@ class _MovieListPageState extends State<MovieListPage>
                         sectionTitle: 'Em cartaz',
                         onEndReached:
                             _moviesListController.fetchNowPlayingMovies,
-                        loading: _moviesStore.loadingMoreNowPlayingMovies,
+                        loading: _moviesStore.loadingNowPlayingMovies,
+                        loadingMore: _moviesStore.loadingMoreNowPlayingMovies,
                       )),
               Observer(
                   builder: (_) => MoviesListSection(
                         movies: _moviesListController.filteredTopRatedMovies,
                         sectionTitle: 'Melhor avaliados',
                         onEndReached: _moviesListController.fetchTopRatedMovies,
-                        loading: _moviesStore.loadingMoreTopRatedMovies,
+                        loading: _moviesStore.loadingTopRatedMovies,
+                        loadingMore: _moviesStore.loadingMoreTopRatedMovies,
                       )),
             ],
           ),

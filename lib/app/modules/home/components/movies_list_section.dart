@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skeleton_animation/skeleton_animation.dart';
 import 'package:tmdbmovies/app/modules/home/components/movie_widget.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
 
@@ -8,13 +9,15 @@ class MoviesListSection extends StatefulWidget {
       required this.movies,
       required this.sectionTitle,
       required this.onEndReached,
-      required this.loading})
+      required this.loading,
+      required this.loadingMore})
       : super(key: key);
 
   final List<Movie> movies;
   final String sectionTitle;
   final Function onEndReached;
   final bool loading;
+  final bool loadingMore;
 
   @override
   _MoviesListSectionState createState() => _MoviesListSectionState();
@@ -50,7 +53,7 @@ class _MoviesListSectionState extends State<MoviesListSection> {
                   widget.sectionTitle,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
-                if (widget.loading)
+                if (widget.loadingMore)
                   Padding(
                     padding: const EdgeInsets.only(left: 16),
                     child: CircularProgressIndicator(
@@ -65,10 +68,18 @@ class _MoviesListSectionState extends State<MoviesListSection> {
             child: ListView.builder(
                 controller: _scrollController,
                 padding: const EdgeInsets.only(left: 8),
-                itemCount: widget.movies.length,
+                itemCount: widget.loading ? 4 : widget.movies.length,
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) =>
-                    MovieWidget(movie: widget.movies[index])),
+                itemBuilder: (context, index) => widget.loading
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Skeleton(
+                          width: 200,
+                          height: 300,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      )
+                    : MovieWidget(movie: widget.movies[index])),
           )
         ],
       ),
