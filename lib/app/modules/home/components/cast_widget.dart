@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
 import 'package:tmdbmovies/shared/models/cast_model.dart';
 
 class CastWidget extends StatelessWidget {
@@ -19,10 +20,7 @@ class CastWidget extends StatelessWidget {
               child: Container(
                 height: 78,
                 width: 78,
-                child: Image.network(
-                  cast.profilePath ?? "",
-                  fit: BoxFit.cover,
-                ),
+                child: ImageWithPlaceholder(url: cast.profilePath,),
               ),
             ),
             SizedBox(

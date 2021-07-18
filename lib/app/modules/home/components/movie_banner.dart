@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
 
 class MovieBanner extends StatelessWidget {
   const MovieBanner(
@@ -14,13 +15,12 @@ class MovieBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  ClipRRect(
+    return ClipRRect(
       borderRadius: BorderRadius.circular(8.0),
       child: SizedBox(
         height: height,
         width: width,
-        child: Image.network(bannerUrl,
-            fit: BoxFit.cover),
+        child: ImageWithPlaceholder(url: bannerUrl),
       ),
     );
   }

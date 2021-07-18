@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
 import 'package:tmdbmovies/app/modules/home/components/popularity_indicator.dart';
 import 'package:tmdbmovies/app/modules/home/pages/movie_details_page.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
@@ -25,7 +26,7 @@ class MovieWidget extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Stack(children: [
-              Image.network(movie.posterPath ?? "", fit: BoxFit.cover),
+              ImageWithPlaceholder(url: movie.posterPath),
               Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(

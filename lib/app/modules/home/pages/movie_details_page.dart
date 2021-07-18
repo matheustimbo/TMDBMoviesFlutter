@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:tmdbmovies/app/modules/home/components/cast_list_section.dart';
+import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
 import 'package:tmdbmovies/app/modules/home/components/movie_banner.dart';
 import 'package:tmdbmovies/app/modules/home/components/movie_info.dart';
 import 'package:tmdbmovies/app/modules/home/components/movie_statistics.dart';
@@ -47,9 +48,12 @@ class _MovieDetailsState
               flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.parallax,
                 title: Observer(builder: (_) {
-                  return Text(controller.loading
-                      ? 'Carregando'
-                      : controller.movie?.title ?? "");
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(controller.loading
+                        ? 'Carregando'
+                        : controller.movie?.title ?? ""),
+                  );
                 }),
                 background: _buildSliverAppBarBackground(context),
               ),
@@ -151,8 +155,7 @@ class _MovieDetailsState
             height: controller.backdropHeight,
             width: double.infinity,
             child: !controller.playingVideo
-                ? Image.network(controller.movie?.backdropPath ?? "",
-                    fit: BoxFit.cover)
+                ? ImageWithPlaceholder(url: controller.movie?.backdropPath)
                 : VideoPlayer(
                     videoId: controller.movieVideos[0].key ?? "",
                     width: MediaQuery.of(context).size.width,

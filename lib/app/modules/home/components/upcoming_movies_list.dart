@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
 import 'package:tmdbmovies/app/modules/home/pages/movie_details_page.dart';
 
@@ -61,9 +62,8 @@ class _UpcomingMoviesListState extends State<UpcomingMoviesList> {
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 300,
-                        child: Image.network(
-                          widget.upcomingMovies[index].backdropPath ?? "",
-                          fit: BoxFit.cover,
+                        child: ImageWithPlaceholder(
+                          url: widget.upcomingMovies[index].backdropPath,
                           alignment: Alignment(-pageOffset + index, 0),
                         ),
                       ),

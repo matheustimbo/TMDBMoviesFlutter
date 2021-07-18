@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
 import 'package:tmdbmovies/shared/models/tvshow_model.dart';
 
 class TvshowWidget extends StatelessWidget {
@@ -20,7 +21,7 @@ class TvshowWidget extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Stack(children: [
-              Image.network(tvshow.posterPath ?? "", fit: BoxFit.cover),
+              ImageWithPlaceholder(url: tvshow.posterPath),
               Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
