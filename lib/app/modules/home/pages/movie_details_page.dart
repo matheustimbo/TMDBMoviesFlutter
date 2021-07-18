@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:intl/intl.dart';
+import 'package:tmdbmovies/app/modules/home/components/cast_list_section.dart';
 import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart';
 import 'package:tmdbmovies/app/modules/home/components/popularity_indicator.dart';
 import 'package:tmdbmovies/app/modules/home/components/video_player.dart';
@@ -13,6 +15,7 @@ class MovieDetailsPage extends StatefulWidget {
   static const routeName = '/movie';
 
   final String id;
+  final currencyFormatter = NumberFormat.currency(locale: 'en_US');
 
   MovieDetailsPage({Key? key, required this.id}) : super(key: key);
 
@@ -105,24 +108,43 @@ class _MovieDetailsState
                                   SizedBox(
                                     height: 32,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    child: Text(
-                                      'Resumo',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 22),
-                                    ),
-                                  ),
+                                  TextSection(
+                                      title: 'Resumo',
+                                      text: controller.movie?.overview ??
+                                          "Não encontrado"),
                                   SizedBox(
                                     height: 16,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    child:
-                                        Text(controller.movie?.overview ?? ''),
+                                  TextSection(
+                                      title: 'Diretor(a)',
+                                      text: controller.movieDirector?.name ??
+                                          "Não encontrado"),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  TextSection(
+                                      title: 'Orçamento',
+                                      text: controller.movie?.budget != null
+                                          ? widget.currencyFormatter
+                                              .format(controller.movie!.budget)
+                                              .toString()
+                                          : "Não encontrado"),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  TextSection(
+                                      title: 'Receita',
+                                      text: controller.movie?.revenue != null
+                                          ? widget.currencyFormatter
+                                              .format(controller.movie!.revenue)
+                                              .toString()
+                                          : "Não encontrado"),
+                                  SizedBox(
+                                    height: 32,
+                                  ),
+                                  CastListSection(
+                                    title: 'Atores',
+                                    cast: controller.movieActors,
                                   ),
                                   MoviesListSection(
                                     movies: controller.similarMovies,
@@ -175,6 +197,36 @@ class _MovieDetailsState
             },
           ));
     });
+  }
+}
+
+class TextSection extends StatelessWidget {
+  const TextSection({Key? key, required this.title, required this.text})
+      : super(key: key);
+
+  final String title;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+            )),
+        SizedBox(
+          height: 16,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(text),
+        )
+      ],
+    );
   }
 }
 

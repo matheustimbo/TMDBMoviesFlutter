@@ -10,4 +10,10 @@ class Utils {
         ? 'https://image.tmdb.org/t/p/w1280/$backdropPath'
         : null;
   }
+
+  static String? getFullProfileUrl(String? profilePath) {
+    return profilePath != null
+        ? 'https://image.tmdb.org/t/p/w185/$profilePath'
+        : null;
+  }
 }

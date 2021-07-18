@@ -65,6 +65,82 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
           Computed<double>(() => super.contentScrollPadding,
               name: '_MovieDetailsControllerBase.contentScrollPadding'))
       .value;
+  Computed<Crew?>? _$movieDirectorComputed;
+
+  @override
+  Crew? get movieDirector =>
+      (_$movieDirectorComputed ??= Computed<Crew?>(() => super.movieDirector,
+              name: '_MovieDetailsControllerBase.movieDirector'))
+          .value;
+  Computed<List<Cast>>? _$movieActorsComputed;
+
+  @override
+  List<Cast> get movieActors =>
+      (_$movieActorsComputed ??= Computed<List<Cast>>(() => super.movieActors,
+              name: '_MovieDetailsControllerBase.movieActors'))
+          .value;
+
+  final _$movieCrewAtom = Atom(name: '_MovieDetailsControllerBase.movieCrew');
+
+  @override
+  List<Crew> get movieCrew {
+    _$movieCrewAtom.reportRead();
+    return super.movieCrew;
+  }
+
+  @override
+  set movieCrew(List<Crew> value) {
+    _$movieCrewAtom.reportWrite(value, super.movieCrew, () {
+      super.movieCrew = value;
+    });
+  }
+
+  final _$loadingCrewAtom =
+      Atom(name: '_MovieDetailsControllerBase.loadingCrew');
+
+  @override
+  bool get loadingCrew {
+    _$loadingCrewAtom.reportRead();
+    return super.loadingCrew;
+  }
+
+  @override
+  set loadingCrew(bool value) {
+    _$loadingCrewAtom.reportWrite(value, super.loadingCrew, () {
+      super.loadingCrew = value;
+    });
+  }
+
+  final _$movieCastAtom = Atom(name: '_MovieDetailsControllerBase.movieCast');
+
+  @override
+  List<Cast> get movieCast {
+    _$movieCastAtom.reportRead();
+    return super.movieCast;
+  }
+
+  @override
+  set movieCast(List<Cast> value) {
+    _$movieCastAtom.reportWrite(value, super.movieCast, () {
+      super.movieCast = value;
+    });
+  }
+
+  final _$loadingCastAtom =
+      Atom(name: '_MovieDetailsControllerBase.loadingCast');
+
+  @override
+  bool get loadingCast {
+    _$loadingCastAtom.reportRead();
+    return super.loadingCast;
+  }
+
+  @override
+  set loadingCast(bool value) {
+    _$loadingCastAtom.reportWrite(value, super.loadingCast, () {
+      super.loadingCast = value;
+    });
+  }
 
   final _$playingVideoAtom =
       Atom(name: '_MovieDetailsControllerBase.playingVideo');
@@ -218,6 +294,22 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
     return _$firstFetchAsyncAction.run(() => super.firstFetch(id));
   }
 
+  final _$fetchCrewAsyncAction =
+      AsyncAction('_MovieDetailsControllerBase.fetchCrew');
+
+  @override
+  Future<void> fetchCrew(int id) {
+    return _$fetchCrewAsyncAction.run(() => super.fetchCrew(id));
+  }
+
+  final _$fetchCastAsyncAction =
+      AsyncAction('_MovieDetailsControllerBase.fetchCast');
+
+  @override
+  Future<void> fetchCast(int id) {
+    return _$fetchCastAsyncAction.run(() => super.fetchCast(id));
+  }
+
   final _$fetchVideosAsyncAction =
       AsyncAction('_MovieDetailsControllerBase.fetchVideos');
 
@@ -272,6 +364,10 @@ mixin _$MovieDetailsController on _MovieDetailsControllerBase, Store {
   @override
   String toString() {
     return '''
+movieCrew: ${movieCrew},
+loadingCrew: ${loadingCrew},
+movieCast: ${movieCast},
+loadingCast: ${loadingCast},
 playingVideo: ${playingVideo},
 loading: ${loading},
 movie: ${movie},
@@ -288,7 +384,9 @@ appBarOpacity: ${appBarOpacity},
 playIconOpacity: ${playIconOpacity},
 appBarElevation: ${appBarElevation},
 hasVideoToPlay: ${hasVideoToPlay},
-contentScrollPadding: ${contentScrollPadding}
+contentScrollPadding: ${contentScrollPadding},
+movieDirector: ${movieDirector},
+movieActors: ${movieActors}
     ''';
   }
 }

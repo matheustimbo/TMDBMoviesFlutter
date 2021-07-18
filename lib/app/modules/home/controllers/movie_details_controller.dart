@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:tmdbmovies/shared/models/cast_model.dart';
+import 'package:tmdbmovies/shared/models/crew_model.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
 import 'package:tmdbmovies/shared/models/movie_details_model.dart';
 import 'package:tmdbmovies/shared/models/video_model.dart';
@@ -18,6 +20,18 @@ abstract class _MovieDetailsControllerBase with Store implements Disposable {
   void dispose() {}
 
   final MovieRepository _movieRepository = Modular.get<MovieRepository>();
+
+  @observable
+  List<Crew> movieCrew = [];
+
+  @observable
+  bool loadingCrew = false;
+
+  @observable
+  List<Cast> movieCast = [];
+
+  @observable
+  bool loadingCast = false;
 
   @observable
   bool playingVideo = false;
@@ -82,6 +96,16 @@ abstract class _MovieDetailsControllerBase with Store implements Disposable {
   @computed
   double get contentScrollPadding => playingVideo ? 432 : 250;
 
+  @computed
+  Crew? get movieDirector => movieCrew.length > 0
+      ? movieCrew.firstWhere((Crew crew) => crew.job == 'Director')
+      : null;
+
+  @computed
+  List<Cast> get movieActors => movieCast
+      .where((Cast cast) => cast.knownForDepartment == 'Acting')
+      .toList();
+
   @action
   void togglePlayingVideo() {
     playingVideo = !playingVideo;
@@ -93,6 +117,34 @@ abstract class _MovieDetailsControllerBase with Store implements Disposable {
     fetchMovieDetails(id);
     fetchSimilarMovies(id);
     fetchVideos(id);
+    fetchCrew(id);
+    fetchCast(id);
+  }
+
+  @action
+  Future<void> fetchCrew(int id) async {
+    loadingCrew = true;
+    try {
+      var fetchedCrew = await _movieRepository.getMovieCrew(id);
+      movieCrew = fetchedCrew;
+      loadingCrew = false;
+    } on DioError catch (_) {
+      loadingCrew = false;
+      print("catch");
+    }
+  }
+
+  @action
+  Future<void> fetchCast(int id) async {
+    loadingCast = true;
+    try {
+      var fetchedCast = await _movieRepository.getMovieCast(id);
+      movieCast = fetchedCast;
+      loadingCast = false;
+    } on DioError catch (_) {
+      loadingCast = false;
+      print("catch");
+    }
   }
 
   @action

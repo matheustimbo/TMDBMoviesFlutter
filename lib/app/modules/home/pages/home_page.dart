@@ -30,11 +30,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
             currentIndex: controller.currentIndex,
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
+                icon: Icon(Icons.movie),
                 label: 'Filmes',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person),
+                icon: Icon(Icons.tv),
                 label: 'Séries',
               ),
             ],
