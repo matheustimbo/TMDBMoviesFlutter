@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tmdbmovies/app/modules/home/components/popularity_indicator.dart';
 import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
 import 'package:tmdbmovies/shared/models/tvshow_model.dart';
 
@@ -39,9 +40,35 @@ class TvshowWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Column(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        if (tvshow.popularity != null)
+                          Text(
+                            tvshow.popularity!.round().toString(),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        Column(
+                          children: [
+                            PopularityIndicator(
+                              fontSize: 12,
+                              size: 48,
+                              voteAverage: tvshow.voteAverage,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(tvshow.voteCount.toString())
+                          ],
+                        ),
+                      ],
+                    ),
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -50,8 +77,11 @@ class TvshowWidget extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
+                        Text(tvshow.originalName ?? ""),
                       ],
-                    )),
+                    )
+                  ],
+                ),
               )
             ]),
           ),
