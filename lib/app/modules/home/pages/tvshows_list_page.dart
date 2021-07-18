@@ -62,14 +62,16 @@ class TvshowsListPageState extends State<TvshowsListPage>
                   sectionTitle: Strings.POPULAR,
                   tvshows: _tvshowsListController.filteredPopularTvshows,
                   onEndReached: _tvshowsListController.fetchPopularTvshows,
-                  loading: _tvshowStore.loadingMorePopularTvshows);
+                  loading: _tvshowStore.loadingPopularTvshows,
+                  loadingMore: _tvshowStore.loadingMorePopularTvshows,);
             }),
             Observer(builder: (_) {
               return TvshowsListSection(
                   sectionTitle: Strings.TOP_RATED,
                   tvshows: _tvshowsListController.filteredTopRatedTvshows,
                   onEndReached: _tvshowsListController.fetchTopRatedTvshows,
-                  loading: _tvshowStore.loadingMorePopularTvshows);
+                  loading: _tvshowStore.loadingTopRatedTvshows,
+                  loadingMore: _tvshowStore.loadingMoreTopRatedTvshows,);
             }),
           ],
         ),

@@ -12,7 +12,6 @@ class TvshowDetails {
   bool? _inProduction;
   List<String>? _languages;
   String? _lastAirDate;
-  Last_episode_to_air? _lastEpisodeToAir;
   String? _name;
   dynamic? _nextEpisodeToAir;
   List<Networks>? _networks;
@@ -44,7 +43,6 @@ class TvshowDetails {
   bool? get inProduction => _inProduction;
   List<String>? get languages => _languages;
   String? get lastAirDate => _lastAirDate;
-  Last_episode_to_air? get lastEpisodeToAir => _lastEpisodeToAir;
   String? get name => _name;
   dynamic? get nextEpisodeToAir => _nextEpisodeToAir;
   List<Networks>? get networks => _networks;
@@ -77,7 +75,6 @@ class TvshowDetails {
       bool? inProduction,
       List<String>? languages,
       String? lastAirDate,
-      Last_episode_to_air? lastEpisodeToAir,
       String? name,
       dynamic? nextEpisodeToAir,
       List<Networks>? networks,
@@ -108,7 +105,6 @@ class TvshowDetails {
     _inProduction = inProduction;
     _languages = languages;
     _lastAirDate = lastAirDate;
-    _lastEpisodeToAir = lastEpisodeToAir;
     _name = name;
     _nextEpisodeToAir = nextEpisodeToAir;
     _networks = networks;
@@ -155,9 +151,6 @@ class TvshowDetails {
     _languages =
         json["languages"] != null ? json["languages"].cast<String>() : [];
     _lastAirDate = json["last_air_date"];
-    _lastEpisodeToAir = json["last_episode_to_air"] != null
-        ? Last_episode_to_air.fromJson(json["lastEpisodeToAir"])
-        : null;
     _name = json["name"];
     _nextEpisodeToAir = json["next_episode_to_air"];
     if (json["networks"] != null) {
@@ -223,9 +216,6 @@ class TvshowDetails {
     map["in_production"] = _inProduction;
     map["languages"] = _languages;
     map["last_air_date"] = _lastAirDate;
-    if (_lastEpisodeToAir != null) {
-      map["last_episode_to_air"] = _lastEpisodeToAir?.toJson();
-    }
     map["name"] = _name;
     map["next_episode_to_air"] = _nextEpisodeToAir;
     if (_networks != null) {
@@ -481,81 +471,6 @@ class Networks {
 /// still_path : "/3x8tJon5jXFa1ziAM93hPKNyW7i.jpg"
 /// vote_average : 4.8
 /// vote_count : 106
-
-class Last_episode_to_air {
-  String? _airDate;
-  int? _episodeNumber;
-  int? _id;
-  String? _name;
-  String? _overview;
-  String? _productionCode;
-  int? _seasonNumber;
-  String? _stillPath;
-  double? _voteAverage;
-  int? _voteCount;
-
-  String? get airDate => _airDate;
-  int? get episodeNumber => _episodeNumber;
-  int? get id => _id;
-  String? get name => _name;
-  String? get overview => _overview;
-  String? get productionCode => _productionCode;
-  int? get seasonNumber => _seasonNumber;
-  String? get stillPath => _stillPath;
-  double? get voteAverage => _voteAverage;
-  int? get voteCount => _voteCount;
-
-  Last_episode_to_air(
-      {String? airDate,
-      int? episodeNumber,
-      int? id,
-      String? name,
-      String? overview,
-      String? productionCode,
-      int? seasonNumber,
-      String? stillPath,
-      double? voteAverage,
-      int? voteCount}) {
-    _airDate = airDate;
-    _episodeNumber = episodeNumber;
-    _id = id;
-    _name = name;
-    _overview = overview;
-    _productionCode = productionCode;
-    _seasonNumber = seasonNumber;
-    _stillPath = stillPath;
-    _voteAverage = voteAverage;
-    _voteCount = voteCount;
-  }
-
-  Last_episode_to_air.fromJson(dynamic json) {
-    _airDate = json["air_date"];
-    _episodeNumber = json["episode_number"];
-    _id = json["id"];
-    _name = json["name"];
-    _overview = json["overview"];
-    _productionCode = json["production_code"];
-    _seasonNumber = json["season_number"];
-    _stillPath = json["still_path"];
-    _voteAverage = json["vote_average"];
-    _voteCount = json["vote_count"];
-  }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["air_date"] = _airDate;
-    map["episode_number"] = _episodeNumber;
-    map["id"] = _id;
-    map["name"] = _name;
-    map["overview"] = _overview;
-    map["production_code"] = _productionCode;
-    map["season_number"] = _seasonNumber;
-    map["still_path"] = _stillPath;
-    map["vote_average"] = _voteAverage;
-    map["vote_count"] = _voteCount;
-    return map;
-  }
-}
 
 /// id : 9813
 /// credit_id : "5256c8c219c2956ff604858a"

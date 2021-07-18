@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:tmdbmovies/app/modules/home/components/popularity_indicator.dart';
+import 'package:tmdbmovies/app/modules/home/pages/tvshow_details_page.dart';
 import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
 import 'package:tmdbmovies/shared/models/tvshow_model.dart';
 
@@ -15,7 +17,9 @@ class TvshowWidget extends StatelessWidget {
         horizontal: 8,
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Modular.to.pushNamed('${TvshowDetailsPage.routeName}/${tvshow.id}');
+        },
         child: SizedBox(
           width: 200,
           height: 300,

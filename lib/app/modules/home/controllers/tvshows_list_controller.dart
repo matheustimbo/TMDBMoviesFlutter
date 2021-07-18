@@ -55,6 +55,7 @@ class TvshowsListController {
     await Future.wait(
         [fetchPopularTvshows(), fetchTopRatedTvshows(), fetchGenres()]);
     _tvshowStore.loadingPopularTvshows = false;
+    _tvshowStore.loadingTopRatedTvshows = false;
   }
 
   @action

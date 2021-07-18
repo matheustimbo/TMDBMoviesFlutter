@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:skeleton_animation/skeleton_animation.dart';
 import 'package:tmdbmovies/app/modules/home/components/tvshow_widget.dart';
 import 'package:tmdbmovies/shared/models/tvshow_model.dart';
+import 'package:tmdbmovies/shared/strings.dart';
 
 class TvshowsListSection extends StatefulWidget {
   const TvshowsListSection(
@@ -8,13 +10,15 @@ class TvshowsListSection extends StatefulWidget {
       required this.sectionTitle,
       required this.tvshows,
       required this.onEndReached,
-      required this.loading})
+      required this.loading,
+      required this.loadingMore})
       : super(key: key);
 
   final String sectionTitle;
   final List<Tvshow> tvshows;
   final Function onEndReached;
   final bool loading;
+  final bool loadingMore;
 
   @override
   _TvshowsListSectionState createState() => _TvshowsListSectionState();
@@ -60,16 +64,30 @@ class _TvshowsListSectionState extends State<TvshowsListSection> {
               ],
             ),
           ),
-          Container(
-            height: 300,
-            child: ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.only(left: 8),
-                itemCount: widget.tvshows.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) =>
-                    TvshowWidget(tvshow: widget.tvshows[index])),
-          )
+          !widget.loading && widget.tvshows.length == 0
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(Strings.TVSHOWS_NOT_FOUND),
+                )
+              : Container(
+                  height: 300,
+                  child: ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.only(left: 8),
+                      itemCount: widget.loading ? 4 : widget.tvshows.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => widget.loading
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Skeleton(
+                                width: 200,
+                                height: 300,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            )
+                          : TvshowWidget(tvshow: widget.tvshows[index])),
+                )
         ],
       ),
     );

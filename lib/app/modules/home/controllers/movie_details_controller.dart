@@ -61,9 +61,12 @@ abstract class _MovieDetailsControllerBase with Store implements Disposable {
   bool get hasVideoToPlay => movieVideos.length > 0;
 
   @computed
-  Crew? get movieDirector => movieCrew.length > 0
-      ? movieCrew.firstWhere((Crew crew) => crew.job == 'Director')
-      : null;
+  Crew? get movieDirector {
+    if (movieCrew.where((Crew crew) => crew.job == 'Director').length == 0) {
+      return null;
+    }
+    return movieCrew.firstWhere((Crew crew) => crew.job == 'Director');
+  }
 
   @computed
   List<Cast> get movieActors => movieCast

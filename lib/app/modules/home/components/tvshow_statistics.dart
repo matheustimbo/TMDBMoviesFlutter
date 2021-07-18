@@ -3,12 +3,17 @@ import 'package:tmdbmovies/app/modules/home/components/popularity_indicator.dart
 import 'package:tmdbmovies/shared/models/genre_model.dart';
 import 'package:tmdbmovies/shared/strings.dart';
 
-class MovieStatistics extends StatelessWidget {
-  const MovieStatistics({ Key? key,required this.voteAverage, required this.movieGenres, required this.runtime }) : super(key: key);
+class TvshowStatistics extends StatelessWidget {
+  const TvshowStatistics(
+      {Key? key,
+      required this.voteAverage,
+      required this.movieGenres,
+      required this.numberOfEpisodes})
+      : super(key: key);
 
   final double? voteAverage;
   final List<Genre>? movieGenres;
-  final int? runtime;
+  final int? numberOfEpisodes;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +45,7 @@ class MovieStatistics extends StatelessWidget {
                       height: 16,
                     ),
                     Text(
-                        '${Strings.DURATION}: ${runtime.toString()}m')
+                        '${Strings.NUMBER_OF_EPISODES}: ${numberOfEpisodes.toString()}')
                   ],
                 ),
               ),

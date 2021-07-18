@@ -15,4 +15,8 @@ class Strings {
   static const String NOW_PLAYING = 'Em cartaz';
   static const String TOP_RATED = 'Melhor avaliados';
   static const String UPCOMING = 'Vindo aí';
+  static const String MOVIES_NOT_FOUND = 'Não foram encontrados filmes nestes parâmetros';
+  static const String TVSHOWS_NOT_FOUND = 'Não foram enontradas séries nestes parâmetros';
+  static const String DURATION = 'Duração';
+  static const String NUMBER_OF_EPISODES = 'Número de episódios';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skeleton_animation/skeleton_animation.dart';
 import 'package:tmdbmovies/app/modules/home/components/movie_widget.dart';
 import 'package:tmdbmovies/shared/models/movie_model.dart';
+import 'package:tmdbmovies/shared/strings.dart';
 
 class MoviesListSection extends StatefulWidget {
   const MoviesListSection(
@@ -65,7 +66,7 @@ class _MoviesListSectionState extends State<MoviesListSection> {
           ),
           !widget.loading && widget.movies.length == 0 ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text('Não foram encontrados filmes nestes parâmetros'),
+            child: Text(Strings.MOVIES_NOT_FOUND),
           ) : Container(
             height: 300,
             child: ListView.builder(

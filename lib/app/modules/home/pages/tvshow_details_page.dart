@@ -1,34 +1,34 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:tmdbmovies/app/modules/home/components/cast_list_section.dart';
-import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
 import 'package:tmdbmovies/app/modules/home/components/movie_banner.dart';
 import 'package:tmdbmovies/app/modules/home/components/movie_info.dart';
 import 'package:tmdbmovies/app/modules/home/components/movie_statistics.dart';
-import 'package:tmdbmovies/app/modules/home/components/movies_list_section.dart';
 import 'package:tmdbmovies/app/modules/home/components/text_section.dart';
+import 'package:tmdbmovies/app/modules/home/components/tvshow_list_section.dart';
+import 'package:tmdbmovies/app/modules/home/components/tvshow_statistics.dart';
 import 'package:tmdbmovies/app/modules/home/components/video_player.dart';
-import 'package:tmdbmovies/app/modules/home/controllers/movie_details_controller.dart';
+import 'package:tmdbmovies/app/modules/home/controllers/tvshow_details_controller.dart';
+import 'package:tmdbmovies/shared/components/image_with_placeholder.dart';
+import 'package:tmdbmovies/shared/models/crew_model.dart';
 import 'package:tmdbmovies/shared/strings.dart';
 
-class MovieDetailsPage extends StatefulWidget {
-  static const routeName = '/movie';
+class TvshowDetailsPage extends StatefulWidget {
+  TvshowDetailsPage({Key? key, required this.id}) : super(key: key);
 
   final String id;
   final currencyFormatter = NumberFormat.currency(locale: 'en_US');
 
-  MovieDetailsPage({Key? key, required this.id}) : super(key: key);
+  static const routeName = '/tvshow';
 
   @override
-  _MovieDetailsState createState() => _MovieDetailsState();
+  _TvshowDetailsPageState createState() => _TvshowDetailsPageState();
 }
 
-class _MovieDetailsState
-    extends ModularState<MovieDetailsPage, MovieDetailsController> {
+class _TvshowDetailsPageState
+    extends ModularState<TvshowDetailsPage, TvshowDetailsController> {
   @override
   void initState() {
     super.initState();
@@ -53,7 +53,7 @@ class _MovieDetailsState
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(controller.loading
                         ? Strings.LOADING
-                        : controller.movie?.title ?? Strings.TITLE_NOT_FOUND),
+                        : controller.tvshow?.name ?? Strings.TITLE_NOT_FOUND),
                   );
                 }),
                 background: _buildSliverAppBarBackground(context),
@@ -85,52 +85,25 @@ class _MovieDetailsState
                                 ),
                                 TextSection(
                                     title: Strings.OVERVIEW,
-                                    text: controller.movie?.overview ??
+                                    text: controller.tvshow?.overview ??
                                         Strings.NOT_FOUND),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                                TextSection(
-                                    title: Strings.DIRECTOR,
-                                    text: controller.movieDirector?.name ??
-                                        Strings.NOT_FOUND),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                                TextSection(
-                                    title: Strings.BUDGET,
-                                    text: controller.movie?.budget != null
-                                        ? widget.currencyFormatter
-                                            .format(controller.movie!.budget)
-                                            .toString()
-                                        : Strings.NOT_FOUND),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                                TextSection(
-                                    title: Strings.REVENUE,
-                                    text: controller.movie?.revenue != null
-                                        ? widget.currencyFormatter
-                                            .format(controller.movie!.revenue)
-                                            .toString()
-                                        : Strings.NOT_FOUND),
                                 SizedBox(
                                   height: 32,
                                 ),
                                 CastListSection(
                                   title: Strings.ACTORS,
-                                  cast: controller.movieActors,
+                                  cast: controller.tvshowActors,
                                 ),
-                                MoviesListSection(
-                                  movies: controller.similarMovies,
+                                TvshowsListSection(
+                                  tvshows: controller.similarTvshows,
                                   sectionTitle: Strings.SIMILARS,
                                   onEndReached: () {
-                                    controller.fetchSimilarMovies(
+                                    controller.fetchSimilarTvshows(
                                         int.parse(widget.id));
                                   },
-                                  loading: controller.loadingSimilarMovies,
+                                  loading: controller.loadingSimilarTvshows,
                                   loadingMore:
-                                      controller.loadingMoreSimilarMovies,
+                                      controller.loadingMoreSimilarTvshows,
                                 )
                               ],
                             ),
@@ -151,9 +124,9 @@ class _MovieDetailsState
             height: 400,
             width: double.infinity,
             child: !controller.playingVideo
-                ? ImageWithPlaceholder(url: controller.movie?.backdropPath)
+                ? ImageWithPlaceholder(url: controller.tvshow?.backdropPath)
                 : VideoPlayer(
-                    videoId: controller.movieVideos[0].key ?? "",
+                    videoId: controller.tvshowVideos[0].key ?? "",
                     width: MediaQuery.of(context).size.width,
                     height: 400),
           ),
@@ -204,7 +177,7 @@ class _MovieDetailsState
         MovieBanner(
             height: 250,
             width: 140,
-            bannerUrl: controller.movie?.posterPath ?? ""),
+            bannerUrl: controller.tvshow?.posterPath ?? ""),
         Padding(
           padding: const EdgeInsets.only(left: 16),
           child: SizedBox(
@@ -212,16 +185,16 @@ class _MovieDetailsState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 MovieInfo(
-                    title: controller.movie?.title,
-                    originalTitle: controller.movie?.originalTitle,
-                    releaseDate: controller.movie?.releaseDate),
+                    title: controller.tvshow?.name,
+                    originalTitle: controller.tvshow?.originalName,
+                    releaseDate: controller.tvshow?.firstAirDate),
                 SizedBox(
                   height: 16,
                 ),
-                MovieStatistics(
-                    voteAverage: controller.movie?.voteAverage,
-                    movieGenres: controller.movie!.genres,
-                    runtime: controller.movie!.runtime)
+                TvshowStatistics(
+                    voteAverage: controller.tvshow?.voteAverage,
+                    movieGenres: controller.tvshow?.genres,
+                    numberOfEpisodes: controller.tvshow?.numberOfEpisodes)
               ],
             ),
           ),
